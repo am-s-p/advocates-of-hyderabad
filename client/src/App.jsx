@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 
 const WHATSAPP_NUMBER = '917600079980';
-const SERVER_URL = 'http://localhost:5003';
+// Uses relative path — works in both local dev (via Vite proxy) and Vercel production
+const SERVER_URL = '';
 
 // Fallback: build WhatsApp URL on client in case server is unreachable
 function buildWhatsAppUrl({ name, email, phone, domain, message }) {

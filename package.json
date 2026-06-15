@@ -1,0 +1,18 @@
+{
+  "name": "advocates-of-hyderabad",
+  "version": "1.0.0",
+  "description": "Advocates of Hyderabad — Premium Law Firm Website",
+  "private": true,
+  "scripts": {
+    "build": "cd client && npm install && npm run build",
+    "start": "cd server && node server.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.3.1",
+    "nodemailer": "^6.9.13"
+  }
+}
