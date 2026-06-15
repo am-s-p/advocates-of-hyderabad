@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADVOCATES OF HYDERABAD | Elite Legal Counsel</title>
+  <meta name="description"
+    content="Advocates of Hyderabad - Offering elite representation across Criminology, Corporate, Civil & Divorce litigation. Guided by integrity, wisdom, and justice.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <!-- Dynamic Navigation Bar -->
+  <nav class="nav-bar" id="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-logo" id="nav-logo">
+        <svg class="logo-svg" viewBox="0 0 100 100" width="36" height="36" style="flex-shrink: 0;">
+          <circle class="logo-circle" cx="50" cy="50" r="46" />
+          <path class="logo-wings" d="M 32 30 L 50 48 L 68 30" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+          <rect class="logo-band" x="38" y="48" width="10" height="32" />
+          <rect class="logo-band" x="52" y="48" width="10" height="32" />
+        </svg>
+        <span class="logo-text">ADVOCATES OF HYDERABAD</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#quotes" class="nav-link">Philosophy</a></li>
+        <li><a href="#team" class="nav-link">Counsel</a></li>
+        <li><a href="#contact" class="nav-link button-outline">Consultation</a></li>
+      </ul>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"></circle>
+          <path
+            d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42">
+          </path>
+        </svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="about">
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge reveal-item">EST. 1998</div>
+      <h1 class="hero-title reveal-item">Not Just A Lawyer,<br><span class="serif-title">Your Legal Shield.</span></h1>
+      <p class="hero-subtitle reveal-item">Advocates of Hyderabad offering premier representation in Criminology, Civil litigation, Divorce disputes, and Financial legal counsel.</p>
+      <div class="hero-actions reveal-item">
+        <a href="#team" class="btn btn-primary">Meet Our Counsel</a>
+        <a href="#contact" class="btn btn-secondary">Request Case Review</a>
+      </div>
+      <div class="scroll-indicator">
+        <span class="scroll-text">Explore Philosophy</span>
+        <div class="scroll-mouse">
+          <div class="scroll-wheel"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Inspirational Quote Section -->
+  <section class="quotes-section" id="quotes">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Philosophy</span>
+        <h2 class="section-title">Guided by Truth</h2>
+      </div>
+
+      <div class="quote-slider-container">
+        <div class="quote-slide active" id="quote-slide">
+          <span class="quote-mark">“</span>
+          <p class="quote-text" id="quote-text">Justice is truth in action. It is the core anchor upon which
+            civilization rests, demanding courage, precision, and relentless advocacy.</p>
+          <cite class="quote-author" id="quote-author">— Benjamin Disraeli</cite>
+        </div>
+        <div class="quote-controls">
+          <button class="quote-btn" id="prev-quote" aria-label="Previous quote">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <div class="quote-dots" id="quote-dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+            <span class="dot" data-index="3"></span>
+          </div>
+          <button class="quote-btn" id="next-quote" aria-label="Next quote">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lawyers Section (4 domains) -->
+  <section class="team-section" id="team">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Elite Advocacy</span>
+        <h2 class="section-title">Our Legal Minds</h2>
+        <p class="section-subtitle">Choose a domain expert to review details, select cases, and secure your rights.</p>
+      </div>
+
+      <div class="lawyer-grid">
+        <!-- Lawyer 1: D Vijay Kiran -->
+        <div class="lawyer-card" data-domain="advocate">
+          <div class="lawyer-img-wrapper">
+            <div class="lawyer-placeholder-graphic">
+              <svg class="card-logo-svg" viewBox="0 0 100 100" width="70" height="70" style="margin-top: 10px;">
+                <circle class="logo-circle" cx="50" cy="50" r="46" />
+                <path class="logo-wings" d="M 32 30 L 50 48 L 68 30" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                <rect class="logo-band" x="38" y="48" width="10" height="32" />
+                <rect class="logo-band" x="52" y="48" width="10" height="32" />
+              </svg>
+            </div>
+            <div class="lawyer-badge">Senior Advocate</div>
+          </div>
+          <div class="lawyer-info">
+            <h3 class="lawyer-name">D Vijay Kiran</h3>
+            <p class="lawyer-title">Senior Legal Advocate</p>
+            <p class="lawyer-quote">"Not Just A Lawyer, Your Legal Shield."</p>
+            <button class="btn btn-card-details">View Profile & Case History</button>
+          </div>
+        </div>
+
+        <!-- Lawyer 2: D Sai Kumar -->
+        <div class="lawyer-card" data-domain="criminal">
+          <div class="lawyer-img-wrapper">
+            <div class="lawyer-placeholder-graphic">
+              <span>§</span>
+            </div>
+            <div class="lawyer-badge">Criminology</div>
+          </div>
+          <div class="lawyer-info">
+            <h3 class="lawyer-name">D Sai Kumar</h3>
+            <p class="lawyer-title">LLB Criminology</p>
+            <p class="lawyer-quote">"A defense is not a technicality; it is the vital shield of liberty."</p>
+            <button class="btn btn-card-details">View Profile & Case History</button>
+          </div>
+        </div>
+
+        <!-- Lawyer 3: Bhavana -->
+        <div class="lawyer-card" data-domain="corporate">
+          <div class="lawyer-img-wrapper">
+            <div class="lawyer-placeholder-graphic">
+              <span>🏢</span>
+            </div>
+            <div class="lawyer-badge">Financial Legal Team</div>
+          </div>
+          <div class="lawyer-info">
+            <h3 class="lawyer-name">Bhavana</h3>
+            <p class="lawyer-title">CMA Financial Legal Team</p>
+            <p class="lawyer-quote">"Integrity is the first chapter in the book of corporate wisdom."</p>
+            <button class="btn btn-card-details">View Profile & Case History</button>
+          </div>
+        </div>
+
+        <!-- Lawyer 4: Narasimha -->
+        <div class="lawyer-card" data-domain="family">
+          <div class="lawyer-img-wrapper">
+            <div class="lawyer-placeholder-graphic">
+              <span>⚖</span>
+            </div>
+            <div class="lawyer-badge">Civil & Divorce</div>
+          </div>
+          <div class="lawyer-info">
+            <h3 class="lawyer-name">Narasimha</h3>
+            <p class="lawyer-title">Civil and Divorce Advocate</p>
+            <p class="lawyer-quote">"Family and civil disputes require not just legal knowledge, but empathy."</p>
+            <button class="btn btn-card-details">View Profile & Case History</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Modal for Detailed Lawyer Profile -->
+  <div class="modal-overlay" id="lawyer-modal">
+    <div class="modal-card">
+      <button class="modal-close" id="modal-close" aria-label="Close modal">✕</button>
+      <div class="modal-content-grid">
+        <div class="modal-side-graphic">
+          <div class="modal-icon" id="modal-lawyer-icon">§</div>
+          <h2 class="modal-lawyer-name" id="modal-lawyer-name">D Vijay Kiran</h2>
+          <p class="modal-lawyer-role" id="modal-lawyer-role">Senior Legal Advocate</p>
+          <span class="modal-lawyer-tag" id="modal-lawyer-tag">Senior Counsel</span>
+        </div>
+        <div class="modal-details-body">
+          <h4 class="modal-subheader">Core Philosophy</h4>
+          <p class="modal-bio-quote" id="modal-lawyer-bio-quote">"Not Just A Lawyer, Your Legal Shield."</p>
+
+          <h4 class="modal-subheader">Expertise & Experience</h4>
+          <p class="modal-bio-text" id="modal-lawyer-bio">Expert in constitutional law, complex litigation, and primary advisory services in Hyderabad. Delivering comprehensive legal security for over 22 years.</p>
+
+          <h4 class="modal-subheader">Notable Successes</h4>
+          <ul class="modal-list" id="modal-lawyer-success">
+            <li>State Landmark Case - Constitutional Right Protection</li>
+            <li>In Re Henderson - Civil Rights Landmark Victory</li>
+          </ul>
+
+          <div class="modal-action-row">
+            <button class="btn btn-primary" id="modal-book-btn">Book Consultation</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Contact Section -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info-panel">
+          <span class="section-tag">Connect</span>
+          <h2 class="section-title">Initiate Consultation</h2>
+          <p class="contact-lead-text">Fill out the intake secure form, or reach out to our office directly to establish attorney-client relationship.</p>
+
+          <div class="contact-meta-item">
+            <div class="meta-icon">✆</div>
+            <div class="meta-details">
+              <h4>Direct Call</h4>
+              <p>+91 94934 56771</p>
+            </div>
+          </div>
+          <div class="contact-meta-item">
+            <div class="meta-icon">📞</div>
+            <div class="meta-details">
+              <h4>Alternate Line</h4>
+              <p>+91 96180 139641</p>
+            </div>
+          </div>
+          <div class="contact-meta-item">
+            <div class="meta-icon">📍</div>
+            <div class="meta-details">
+              <h4>Office Location</h4>
+              <p style="font-size: 0.95rem; line-height: 1.4;">Near Bharani Apartment, 62, 63, near Tata Zudio Kondapor,<br>Hanuman Nagar, Green Hamlet, Kothaguda,<br>Hyderabad, Telangana 500084</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form-panel">
+          <div class="form-wrapper" id="form-container">
+            <form id="consultation-form" novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="client-name">Full Name</label>
+                  <input type="text" id="client-name" name="name" required placeholder="John Doe">
+                  <span class="error-msg" id="name-error">Name is required</span>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="client-email">Secure Email Address</label>
+                  <input type="email" id="client-email" name="email" required placeholder="john@example.com">
+                  <span class="error-msg" id="email-error">Please enter a valid email</span>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="legal-domain">Practice Area Area of Concern</label>
+                  <select id="legal-domain" name="domain" required>
+                    <option value="" disabled selected>Select a practice area...</option>
+                    <option value="advocate">General Advocacy (Vijay Kiran)</option>
+                    <option value="criminal">Criminology (Sai Kumar)</option>
+                    <option value="corporate">Financial Legal Team (Bhavana)</option>
+                    <option value="family">Civil and Divorce (Narasimha)</option>
+                  </select>
+                  <span class="error-msg" id="domain-error">Please select a domain</span>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="client-message">Brief Case Outline (Confidential)</label>
+                  <textarea id="client-message" name="message" rows="4"
+                    placeholder="Brief outline of your query..."></textarea>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block" id="submit-btn">
+                <span>Submit Secure Request</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Success State Display -->
+          <div class="form-success-state" id="success-state">
+            <div class="success-icon-wrapper">
+              <svg class="success-checkmark" viewBox="0 0 52 52">
+                <circle class="success-checkmark-circle" cx="26" cy="26" r="25" fill="none" />
+                <path class="success-checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+              </svg>
+            </div>
+            <h3 class="success-title">Request Transmitted</h3>
+            <p class="success-text">Our legal team has received your request. A representative from your selected
+              practice group will contact you securely within 2 business hours.</p>
+            <p class="success-reference">Confirmation Code: <strong id="confirmation-code">VP-8490</strong></p>
+            <button class="btn btn-secondary" id="reset-form-btn">Submit Another Request</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="footer-logo">
+            <svg class="logo-svg" viewBox="0 0 100 100" width="24" height="24" style="display:inline-block; vertical-align:middle; margin-right:6px;">
+              <circle class="logo-circle" cx="50" cy="50" r="46" />
+              <path class="logo-wings" d="M 32 30 L 50 48 L 68 30" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+              <rect class="logo-band" x="38" y="48" width="10" height="32" />
+              <rect class="logo-band" x="52" y="48" width="10" height="32" />
+            </svg>
+            ADVOCATES OF HYDERABAD
+          </span>
+          <p class="footer-desc">Not Just A Lawyer, Your Legal Shield.</p>
+        </div>
+        <div class="footer-links-group">
+          <h4>Practice Areas</h4>
+          <ul>
+            <li><a href="#team">General Advocacy</a></li>
+            <li><a href="#team">Criminology</a></li>
+            <li><a href="#team">Financial Legal Team</a></li>
+            <li><a href="#team">Civil & Divorce</a></li>
+          </ul>
+        </div>
+        <div class="footer-links-group">
+          <h4>Legal Information</h4>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Attorney Advertising Notice</a></li>
+            <li><a href="#">Disclaimer</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr class="footer-divider">
+      <div class="footer-bottom">
+        <p>&copy; 2026 Advocates of Hyderabad. All rights reserved. Attorney Advertising.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
+
