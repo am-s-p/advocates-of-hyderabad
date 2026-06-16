@@ -8,10 +8,10 @@ const SERVER_URL = '';
 // Fallback: build WhatsApp URL on client in case server is unreachable
 function buildWhatsAppUrl({ name, email, phone, domain, message }) {
   const labels = {
-    advocate: 'General Advocacy (D Vijay Kiran)',
-    criminal: 'Criminology (D Sai Kumar)',
-    corporate: 'Financial Legal Team (Bhavana)',
-    family: 'Civil & Divorce (Narasimha)'
+    advocate: 'General Advocacy & Document Verification (D Vijay Kiran)',
+    criminal: 'Criminal Law (D Sai Kumar)',
+    corporate: 'Financial & Loan Settlements (Bhavana)',
+    family: 'Criminal, Civil & Mutual Divorce (Narasimha)'
   };
   const text = [
     '🔔 New Consultation Request',
@@ -67,7 +67,7 @@ const LAWYER_DATA = {
     tag: "Senior Advocate",
     icon: "logo",
     quote: "\u201cNot Just A Lawyer, Your Legal Shield.\u201d",
-    bio: "D Vijay Kiran is the founder and principal legal advocate of Advocates of Hyderabad. With over 9 years of experience, he leads high-stakes constitutional matters, administrative appeals, and comprehensive legal advisory in Telangana and beyond.",
+    bio: "D Vijay Kiran is the founder and principal legal advocate of Advocates of Hyderabad. With over 9 years of experience, he leads high-stakes constitutional matters, document verification, administrative appeals, and comprehensive legal advisory in Telangana and beyond.",
     successes: [
       "Secured positive landmark judgments in major land and inheritance disputes.",
       "Successfully defended fundamental liberties in constitutional public interest litigations.",
@@ -76,11 +76,11 @@ const LAWYER_DATA = {
   },
   criminal: {
     name: "D Sai Kumar",
-    role: "LLB Criminology Specialist",
-    tag: "Criminology",
+    role: "Criminal Lawyer",
+    tag: "Criminal Law",
     icon: "\u00a7",
     quote: "\u201cA defense is not a technicality; it is the vital shield of liberty that protects the citizen.\u201d",
-    bio: "D Sai Kumar is a dedicated criminal trial advocate holding a specialized LLB in Criminology. He excels in navigating complex trial procedures, forensic verification, bail applications, and state appellate defense.",
+    bio: "D Sai Kumar is a dedicated criminal lawyer. He excels in navigating complex trial procedures, forensic verification, bail applications, and state appellate defense for all criminal cases.",
     successes: [
       "State v. Kumar \u2013 Achieved complete exoneration in a high-profile white collar trial.",
       "Successfully secured urgent bail grants in multiple critical trial court hearings.",
@@ -89,11 +89,11 @@ const LAWYER_DATA = {
   },
   corporate: {
     name: "Bhavana",
-    role: "CMA Financial Legal Lead",
+    role: "Financial & Loan Settlements Lead",
     tag: "Financial Legal Team",
     icon: "\ud83c\udfe2",
     quote: "\u201cFinancial integrity and regulatory compliance are the cornerstones of corporate trust.\u201d",
-    bio: "Bhavana integrates Cost & Management Accounting (CMA) expertise with legal strategy, advising companies on tax disputes, corporate auditing, capital structure disputes, compliance frameworks, and M&A legal advisory.",
+    bio: "Bhavana integrates financial expertise with legal strategy, advising clients on loan settlements, tax disputes, corporate auditing, capital structure disputes, and compliance frameworks.",
     successes: [
       "Audited and restructured legal-compliance setups for prominent regional corporations.",
       "Resolved complex financial tax disputes saving millions in regulatory liability.",
@@ -102,14 +102,14 @@ const LAWYER_DATA = {
   },
   family: {
     name: "Narasimha",
-    role: "Civil & Divorce Counsel",
-    tag: "Civil and Divorce",
+    role: "Criminal & Civil Law Expert",
+    tag: "Criminal, Civil & Family",
     icon: "\u2696",
-    quote: "\u201cResolving family and civil disputes requires a balance of rigorous legal strategy and deep empathy.\u201d",
-    bio: "Narasimha specialized in domestic relations, divorce, custody agreements, and general civil property disputes. His objective is to deliver peace of mind and secure resolutions without unnecessary court delays.",
+    quote: "\u201cResolving disputes requires a balance of rigorous legal strategy and deep empathy.\u201d",
+    bio: "Narasimha is excellent in criminal and civil law, specializing in mutual divorce, domestic violence, will settlements, and general civil property disputes. His objective is to deliver peace of mind and secure resolutions.",
     successes: [
       "Successfully mediated high-asset property divisions in complex family estate separations.",
-      "Secured sole guardianship protections in sensitive international child custody matters.",
+      "Secured sole guardianship protections in sensitive domestic violence and custody matters.",
       "Resolved multi-decade civil boundary disputes through expert title litigation."
     ]
   }
@@ -307,12 +307,13 @@ export default function App() {
 
           <div className="nav-right">
             <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle light/dark theme" id="theme-toggle-btn">
-              <svg className="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                <circle cx="12" cy="12" r="5"></circle>
-                <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+              <svg className="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 2v20"></path>
               </svg>
-              <svg className="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+              <svg className="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M2 12h20"></path>
               </svg>
             </button>
 
@@ -663,10 +664,10 @@ export default function App() {
                           aria-invalid={formErrors.domain}
                         >
                           <option value="" disabled>Select a practice area...</option>
-                          <option value="advocate">General Advocacy (D Vijay Kiran)</option>
-                          <option value="criminal">Criminology (D Sai Kumar)</option>
-                          <option value="corporate">Financial Legal Team (Bhavana)</option>
-                          <option value="family">Civil and Divorce (Narasimha)</option>
+                          <option value="advocate">General Advocacy & Document Verification (D Vijay Kiran)</option>
+                          <option value="criminal">Criminal Law (D Sai Kumar)</option>
+                          <option value="corporate">Financial & Loan Settlements (Bhavana)</option>
+                          <option value="family">Criminal, Civil & Mutual Divorce (Narasimha)</option>
                         </select>
                         {formErrors.domain && <span className="error-msg" role="alert" style={{ display: 'block' }}>Please select a domain</span>}
                       </div>
