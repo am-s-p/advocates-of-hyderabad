@@ -1408,6 +1408,99 @@ section {
   .container { padding: 0 16px; }
 }
 
+/* Reviews Section */
+.reviews-section {
+  padding: 80px 0; /* Removing side padding for full bleed marquee */
+  background-color: var(--bg-secondary);
+  overflow: hidden;
+  position: relative;
+}
+
+.reviews-section .section-header {
+  text-align: center;
+  margin-bottom: 50px;
+  padding: 0 20px;
+}
+
+.marquee-container {
+  display: flex;
+  width: max-content;
+  animation: marquee 60s linear infinite;
+  padding-bottom: 20px;
+}
+
+.marquee-container:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.review-card {
+  width: 380px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 24px;
+  margin: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+[data-theme="dark"] .review-card {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.review-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  border-color: var(--accent-color);
+}
+
+[data-theme="dark"] .review-card:hover {
+  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+  border-color: var(--accent-color);
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.reviewer-info h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.review-time {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  display: block;
+  margin-top: 4px;
+}
+
+.review-stars {
+  display: flex;
+  gap: 3px;
+}
+
+.review-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  flex-grow: 1;
+  font-style: italic;
+}
+
 /* Touch target improvement */
 @media (hover: none) {
   .lawyer-card:hover {

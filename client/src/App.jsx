@@ -115,6 +115,24 @@ const LAWYER_DATA = {
   }
 };
 
+const REVIEWS = [
+  { name: "Saiteja nyalam", rating: 5, time: "a week ago", text: "I had a very positive experience with them for my loan settlement. They were professional, knowledgeable, and guided me clearly through each step of the process. Their negotiation skills helped me reach a fair settlement..." },
+  { name: "Shalem Raj Baddanapally", rating: 5, time: "4 months ago", text: "Needed to make a Will for family property and wanted proper legal guidance. A neighbour suggested this legal team near Hitech City. After calling them, they arranged a home visit, which was very helpful as elders were involved." },
+  { name: "Dhanavath Jalini", rating: 5, time: "8 months ago", text: "I approached this Law Services for help with my divorce case in Hyderabad. The advocates were very understanding and explained every legal option clearly. They handled my case professionally and always respected my privacy." },
+  { name: "Mouli Yalla", rating: 5, time: "7 months ago", text: "I had given loan amount to my friend and he didn’t return it on time. I was not sure what to do, but this legal team near Hitech City helped me file a civil money recovery case. They managed all documents and represented me perfectly..." },
+  { name: "Ainapur Rushi prasad", rating: 5, time: "7 months ago", text: "A false complaint in our society WhatsApp group damaged my reputation badly. I was emotionally drained and didn’t know what to do legally. This legal team in Kondapur helped me file a civil defamation suit and guided me on sending proper notices." },
+  { name: "Janardan Bahirat", rating: 5, time: "8 months ago", text: "Advocate of Hyderabad played a crucial role in resolving my case within just two weeks — a matter that had been pending for nearly five months with another firm. I truly appreciate their dedication and prompt action." },
+  { name: "Vinod Kumar Muthyala", rating: 5, time: "8 months ago", text: "Truly impressed by the professionalism and dedication shown throughout the process. Every detail was handled with care, and the communication was always clear and timely. Highly recommend for anyone looking for trustworthy and reliable legal support." },
+  { name: "Roja Mani", rating: 5, time: "a day ago", text: "Great team . Went for property document verification satisfied with service. Highly recommend in this area .Trusted advocates." }
+];
+
+const StarIcon = () => (
+  <svg viewBox="0 0 24 24" width="16" height="16" fill="#fbbc04" stroke="#fbbc04" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+  </svg>
+);
+
+
 const LogoIcon = ({ size = 36 }) => (
   <svg className="logo-svg" viewBox="0 0 100 100" width={size} height={size} aria-hidden="true">
     <circle className="logo-circle" cx="50" cy="50" r="46" />
@@ -521,6 +539,40 @@ export default function App() {
       )}
 
       {/* ═══ CONTACT SECTION ═══ */}
+      <section className="reviews-section" id="reviews" aria-label="Client Testimonials and Google Reviews">
+        <div className="container">
+          <div className="section-header">
+            <h2>Client <span className="serif-title">Trust</span></h2>
+            <p className="section-subtitle">Real experiences from our clients across Hyderabad.</p>
+          </div>
+        </div>
+        <div className="marquee-container">
+          {/* Double the array for seamless infinite scroll */}
+          {[...REVIEWS, ...REVIEWS].map((review, index) => (
+            <div className="review-card" key={index}>
+              <div className="review-header">
+                <div className="reviewer-info">
+                  <h4>{review.name}</h4>
+                  <span className="review-time">{review.time}</span>
+                </div>
+                <div className="google-logo">
+                  <svg viewBox="0 0 48 48" width="24" height="24">
+                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.9c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.13-10.36 7.13-17.65z"/>
+                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                  </svg>
+                </div>
+              </div>
+              <div className="review-stars">
+                {[...Array(review.rating)].map((_, i) => <StarIcon key={i} />)}
+              </div>
+              <p className="review-text">"{review.text}"</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section className="contact-section" id="contact" aria-label="Contact and consultation booking">
         <div className="container">
           <div className="contact-grid">
