@@ -47,7 +47,7 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-async function sendEmailNotification({ name, email, phone, domainLabel, message }) {
+async function sendEmailNotification({ name, email, phone, domainLabel, message, type = 'consultation' }) {
   const recipient = process.env.EMAIL_TO || 'amey9909@gmail.com';
 
   if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
@@ -55,12 +55,34 @@ async function sendEmailNotification({ name, email, phone, domainLabel, message 
     return { success: false, reason: 'credentials_missing' };
   }
 
-  const mailOptions = {
-    from: `"Advocates of Hyderabad" <${process.env.EMAIL_USER}>`,
-    to: recipient,
-    subject: `🔔 New Consultation Request: ${name}`,
-    text: `New Consultation Request\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone || 'Not provided'}\nPractice Area: ${domainLabel}\n\nCase Outline:\n${message || 'Not provided'}\n\n-- Sent via Advocates of Hyderabad Website`,
-    html: `
+  const isCareer = type === 'career';
+  const subject = isCareer 
+    ? `🎓 First-Gen Lawyer Connect Request: ${name}`
+    : `🔔 New Consultation Request: ${name}`;
+
+  const textBody = isCareer
+    ? `First-Gen Lawyer Connect Request\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone || 'Not provided'}\nArea of Interest: ${domainLabel}\n\nMessage/Background:\n${message || 'Not provided'}\n\n-- Sent via Advocates of Hyderabad Website`
+    : `New Consultation Request\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone || 'Not provided'}\nPractice Area: ${domainLabel}\n\nCase Outline:\n${message || 'Not provided'}\n\n-- Sent via Advocates of Hyderabad Website`;
+
+  const htmlBody = isCareer
+    ? `
+      <div style="font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;max-width:600px;margin:0 auto;padding:20px;border:1px solid #e0e0e0;border-radius:12px;background:#fff;color:#333;">
+        <h2 style="border-bottom:2px solid #000;padding-bottom:10px;margin-top:0;color:#1a1a1a;">🎓 First-Gen Lawyer Connect</h2>
+        <table style="width:100%;border-collapse:collapse;margin-top:15px;">
+          <tr><td style="padding:8px 0;font-weight:bold;width:130px;border-bottom:1px solid #f0f0f0;">Applicant Name:</td><td style="padding:8px 0;border-bottom:1px solid #f0f0f0;">${name}</td></tr>
+          <tr><td style="padding:8px 0;font-weight:bold;border-bottom:1px solid #f0f0f0;">Email:</td><td style="padding:8px 0;border-bottom:1px solid #f0f0f0;"><a href="mailto:${email}" style="color:#0066cc;">${email}</a></td></tr>
+          <tr><td style="padding:8px 0;font-weight:bold;border-bottom:1px solid #f0f0f0;">Phone:</td><td style="padding:8px 0;border-bottom:1px solid #f0f0f0;">${phone ? `<a href="tel:${phone}" style="color:#0066cc;">${phone}</a>` : '<em>Not provided</em>'}</td></tr>
+          <tr><td style="padding:8px 0;font-weight:bold;border-bottom:1px solid #f0f0f0;">Area of Interest:</td><td style="padding:8px 0;border-bottom:1px solid #f0f0f0;font-weight:600;">${domainLabel}</td></tr>
+        </table>
+        <div style="margin-top:20px;padding:15px;background:#f9f9f9;border-left:4px solid #000;border-radius:4px;">
+          <h4 style="margin:0 0 8px 0;color:#1a1a1a;">Background / Message:</h4>
+          <p style="margin:0;line-height:1.6;white-space:pre-wrap;">${message || 'Not provided'}</p>
+        </div>
+        <hr style="border:0;border-top:1px solid #e0e0e0;margin:25px 0 15px 0;"/>
+        <p style="font-size:11px;color:#666;margin:0;text-align:center;">Sent automatically from the Advocates of Hyderabad website.</p>
+      </div>
+    `
+    : `
       <div style="font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;max-width:600px;margin:0 auto;padding:20px;border:1px solid #e0e0e0;border-radius:12px;background:#fff;color:#333;">
         <h2 style="border-bottom:2px solid #000;padding-bottom:10px;margin-top:0;color:#1a1a1a;">⚖️ New Consultation Request</h2>
         <table style="width:100%;border-collapse:collapse;margin-top:15px;">
@@ -76,7 +98,14 @@ async function sendEmailNotification({ name, email, phone, domainLabel, message 
         <hr style="border:0;border-top:1px solid #e0e0e0;margin:25px 0 15px 0;"/>
         <p style="font-size:11px;color:#666;margin:0;text-align:center;">Sent automatically from the Advocates of Hyderabad website contact form.</p>
       </div>
-    `
+    `;
+
+  const mailOptions = {
+    from: `"Advocates of Hyderabad" <${process.env.EMAIL_USER}>`,
+    to: recipient,
+    subject,
+    text: textBody,
+    html: htmlBody
   };
 
   try {
@@ -106,7 +135,7 @@ app.post('/api/consultations', async (req, res) => {
     }
 
     const domainLabel = DOMAIN_LABELS[domain] || domain;
-    const emailResult = await sendEmailNotification({ name, email, phone, domainLabel, message });
+    const emailResult = await sendEmailNotification({ name, email, phone, domainLabel, message, type: 'consultation' });
 
     return res.status(201).json({
       success: true,
@@ -115,6 +144,37 @@ app.post('/api/consultations', async (req, res) => {
       message: emailResult.success
         ? 'Consultation saved and email notification sent.'
         : `Consultation saved. Email unavailable: ${emailResult.reason}.`
+    });
+  } catch (err) {
+    console.error('Error:', err);
+    return res.status(500).json({ success: false, error: 'Internal server error.' });
+  }
+});
+
+app.post('/api/careers', async (req, res) => {
+  try {
+    const { name, email, phone, interest, message } = req.body;
+
+    if (!name || !email) {
+      return res.status(400).json({ success: false, error: 'Name and email are required.' });
+    }
+
+    const emailResult = await sendEmailNotification({ 
+      name, 
+      email, 
+      phone, 
+      domainLabel: interest || 'General', 
+      message, 
+      type: 'career' 
+    });
+
+    return res.status(201).json({
+      success: true,
+      emailSent: emailResult.success,
+      emailStatus: emailResult.reason || 'sent',
+      message: emailResult.success
+        ? 'Connect request sent successfully.'
+        : `Request processed but email unavailable: ${emailResult.reason}.`
     });
   } catch (err) {
     console.error('Error:', err);

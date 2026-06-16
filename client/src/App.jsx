@@ -157,6 +157,12 @@ export default function App() {
   const [serverError, setServerError] = useState('');
   const [whatsappFallbackUrl, setWhatsappFallbackUrl] = useState('');
 
+  const [careerFormState, setCareerFormState] = useState({ name: '', email: '', phone: '', interest: '', message: '' });
+  const [careerFormErrors, setCareerFormErrors] = useState({ name: false, email: false, interest: false });
+  const [isCareerSuccess, setIsCareerSuccess] = useState(false);
+  const [isCareerSubmitting, setIsCareerSubmitting] = useState(false);
+  const [careerServerError, setCareerServerError] = useState('');
+
   const quoteInterval = useRef(null);
 
   // Sync Theme
@@ -279,11 +285,67 @@ export default function App() {
   };
 
   const resetForm = () => {
-    setFormState({ name: '', email: '', phone: '', domain: '', message: '' });
     setIsSuccess(false);
-    setConfirmationCode('');
+    setFormState({ name: '', email: '', phone: '', domain: '', message: '' });
+    setFormErrors({ name: false, email: false, domain: false });
     setServerError('');
+    setConfirmationCode('');
     setWhatsappFallbackUrl('');
+  };
+
+  const handleCareerInputChange = (e) => {
+    const { name, value } = e.target;
+    setCareerFormState((prev) => ({ ...prev, [name]: value }));
+    if (careerFormErrors[name]) {
+      setCareerFormErrors((prev) => ({ ...prev, [name]: false }));
+    }
+  };
+
+  const handleCareerSubmit = async (e) => {
+    e.preventDefault();
+    
+    const errors = {
+      name: !careerFormState.name.trim(),
+      email: !validateEmail(careerFormState.email),
+      interest: !careerFormState.interest
+    };
+
+    setCareerFormErrors(errors);
+
+    if (Object.values(errors).some(Boolean)) {
+      return;
+    }
+
+    setIsCareerSubmitting(true);
+    setCareerServerError('');
+
+    try {
+      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5003';
+      const response = await fetch(`${baseUrl}/api/careers`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(careerFormState)
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setIsCareerSuccess(true);
+      } else {
+        setCareerServerError(data.error || 'Failed to submit request.');
+      }
+    } catch (error) {
+      setCareerServerError('Network error. Please try again later.');
+    } finally {
+      setIsCareerSubmitting(false);
+    }
+  };
+
+  const resetCareerForm = () => {
+    setIsCareerSuccess(false);
+    setCareerFormState({ name: '', email: '', phone: '', interest: '', message: '' });
+    setCareerFormErrors({ name: false, email: false, interest: false });
+    setCareerServerError('');
   };
 
   const handleModalBook = () => {
@@ -813,6 +875,159 @@ export default function App() {
         </div>
       </section>
 
+      {/* ═══ CAREERS / FIRST GEN LAWYERS SECTION ═══ */}
+      <section className="contact-section" id="careers" aria-label="First Generation Lawyers Connect" style={{ backgroundColor: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)' }}>
+        <div className="container">
+          <div className="contact-grid">
+            <div className="contact-info">
+              <h2><span className="serif-title">First-Gen</span> Lawyers Connect</h2>
+              <p className="contact-subtitle">
+                Are you a first-generation lawyer looking for mentorship, guidance, or an opportunity to work with us? We believe in nurturing raw talent and providing a platform for the next generation of legal minds.
+              </p>
+              <div className="info-cards">
+                <div className="info-card">
+                  <span className="info-icon">🎓</span>
+                  <div>
+                    <h4>Mentorship</h4>
+                    <p>Learn from seasoned advocates with decades of trial experience.</p>
+                  </div>
+                </div>
+                <div className="info-card">
+                  <span className="info-icon">💼</span>
+                  <div>
+                    <h4>Career Growth</h4>
+                    <p>Gain exposure to high-stakes constitutional, criminal, and corporate matters.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="contact-form-panel">
+              {!isCareerSuccess ? (
+                <div className="form-wrapper">
+                  <h3>Get in Touch</h3>
+                  <form onSubmit={handleCareerSubmit} noValidate>
+                    <div className="form-row">
+                      <div className="form-group">
+                        <label htmlFor="career-name">Full Name *</label>
+                        <input
+                          type="text"
+                          id="career-name"
+                          name="name"
+                          value={careerFormState.name}
+                          onChange={handleCareerInputChange}
+                          className={careerFormErrors.name ? 'error' : ''}
+                          placeholder="Your Name"
+                          aria-required="true"
+                        />
+                        {careerFormErrors.name && <span className="error-msg">Name is required</span>}
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="career-email">Email Address *</label>
+                        <input
+                          type="email"
+                          id="career-email"
+                          name="email"
+                          value={careerFormState.email}
+                          onChange={handleCareerInputChange}
+                          className={careerFormErrors.email ? 'error' : ''}
+                          placeholder="your.email@example.com"
+                          aria-required="true"
+                        />
+                        {careerFormErrors.email && <span className="error-msg">Valid email is required</span>}
+                      </div>
+                    </div>
+
+                    <div className="form-row">
+                      <div className="form-group">
+                        <label htmlFor="career-phone">Phone Number</label>
+                        <input
+                          type="tel"
+                          id="career-phone"
+                          name="phone"
+                          value={careerFormState.phone}
+                          onChange={handleCareerInputChange}
+                          placeholder="+91"
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="career-interest">Area of Interest *</label>
+                        <select
+                          id="career-interest"
+                          name="interest"
+                          value={careerFormState.interest}
+                          onChange={handleCareerInputChange}
+                          className={careerFormErrors.interest ? 'error' : ''}
+                          aria-required="true"
+                        >
+                          <option value="" disabled>Select an area...</option>
+                          <option value="Litigation">Litigation & Trial</option>
+                          <option value="Corporate">Corporate & Financial</option>
+                          <option value="Research">Legal Research & Drafting</option>
+                          <option value="Internship">Internship / Observation</option>
+                        </select>
+                        {careerFormErrors.interest && <span className="error-msg">Please select an area</span>}
+                      </div>
+                    </div>
+
+                    <div className="form-row">
+                      <div className="form-group">
+                        <label htmlFor="career-message">Your Background / Why connect? <span className="optional-tag">(Optional)</span></label>
+                        <textarea
+                          id="career-message"
+                          name="message"
+                          value={careerFormState.message}
+                          onChange={handleCareerInputChange}
+                          rows="4"
+                          placeholder="Tell us a bit about your journey..."
+                        ></textarea>
+                      </div>
+                    </div>
+
+                    {careerServerError && (
+                      <div className="form-server-error" role="alert">
+                        ⚠️ {careerServerError}
+                      </div>
+                    )}
+                    <button
+                      type="submit"
+                      className={`btn btn-primary btn-block ${isCareerSubmitting ? 'submitting' : ''}`}
+                      disabled={isCareerSubmitting}
+                    >
+                      {isCareerSubmitting ? (
+                        <span className="spinner-text">
+                          <span className="btn-spinner" aria-hidden="true"></span>
+                          Submitting...
+                        </span>
+                      ) : (
+                        <span>🎓 Apply to Connect</span>
+                      )}
+                    </button>
+                    <p className="form-note" aria-live="polite">
+                      Your details will be emailed directly to our team at <strong>amey9909@gmail.com</strong>.
+                    </p>
+                  </form>
+                </div>
+              ) : (
+                <div className="form-success-state active">
+                  <div className="success-icon-wrapper">
+                    <svg className="success-checkmark" viewBox="0 0 52 52">
+                      <circle className="success-checkmark-circle" cx="26" cy="26" r="25" fill="none" />
+                      <path className="success-checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                    </svg>
+                  </div>
+                  <h3 className="success-title">Request Sent! ✅</h3>
+                  <p className="success-text">
+                    Your connection request has been sent to our team. We review all applications and will reach out if there's a fit!
+                  </p>
+                  <button className="btn btn-secondary" onClick={resetCareerForm}>Submit Another</button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ═══ FOOTER ═══ */}
       <footer className="site-footer" role="contentinfo">
         <div className="container">
@@ -843,6 +1058,7 @@ export default function App() {
                 <li><a href="#about" onClick={(e) => handleNavClick(e, '#about')}>About Us</a></li>
                 <li><a href="#quotes" onClick={(e) => handleNavClick(e, '#quotes')}>Philosophy</a></li>
                 <li><a href="#contact" onClick={(e) => handleNavClick(e, '#contact')}>Book Consultation</a></li>
+                <li><a href="#careers" onClick={(e) => handleNavClick(e, '#careers')}>First-Gen Connect</a></li>
                 <li>
                   <a
                     href="https://www.google.com/maps/search/?api=1&query=Near+Bharani+Apartment+Kondapur+Hyderabad+Telangana+500084"
