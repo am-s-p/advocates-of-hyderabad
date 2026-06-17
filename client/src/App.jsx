@@ -685,6 +685,7 @@ export default function App() {
           <div className="mobile-nav-contact">
             <a href="tel:+919493456771">📞 +91 94934 56771</a>
             <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">💬 WhatsApp Us</a>
+          </div>
         </div>
       </nav>
       )}
