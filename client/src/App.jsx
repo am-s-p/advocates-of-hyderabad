@@ -226,6 +226,9 @@ const AdminPortal = ({ token, setToken, onExit, fetchPublicPosts }) => {
         setPostForm({ id: null, title: '', content: '', image: '' });
         fetchAdminPosts();
         fetchPublicPosts(); // refresh public feed
+      } else {
+        const data = await res.json();
+        alert(data.error || 'Failed to save post.');
       }
     } catch (err) {
       console.error(err);
@@ -244,6 +247,9 @@ const AdminPortal = ({ token, setToken, onExit, fetchPublicPosts }) => {
       if (res.ok) {
         fetchAdminPosts();
         fetchPublicPosts();
+      } else {
+        const data = await res.json();
+        alert(data.error || 'Failed to delete post.');
       }
     } catch (err) {
       console.error(err);

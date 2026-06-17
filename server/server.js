@@ -244,8 +244,13 @@ const verifyToken = (req, res, next) => {
   }
 };
 
+let mockPosts = []; // In-memory fallback for Vercel without MONGO_URI
+
 // Get all posts (Public)
 app.get('/api/posts', async (req, res) => {
+  if (mongoose.connection.readyState !== 1) {
+    return res.json({ success: true, posts: mockPosts });
+  }
   try {
     const posts = await Post.find().sort({ createdAt: -1 });
     res.json({ success: true, posts });
@@ -255,10 +260,15 @@ app.get('/api/posts', async (req, res) => {
   }
 });
 
-// Create post (Protected)
+// Create/Update post (Protected)
 app.post('/api/posts', verifyToken, async (req, res) => {
   try {
     const { title, content, image } = req.body;
+    if (mongoose.connection.readyState !== 1) {
+      const newPost = { _id: Date.now().toString(), title, content, image, createdAt: new Date() };
+      mockPosts.unshift(newPost);
+      return res.status(201).json({ success: true, post: newPost });
+    }
     const newPost = new Post({ title, content, image });
     await newPost.save();
     res.status(201).json({ success: true, post: newPost });
@@ -268,10 +278,34 @@ app.post('/api/posts', verifyToken, async (req, res) => {
   }
 });
 
+// Update post (Protected)
+app.put('/api/posts/:id', verifyToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, content, image } = req.body;
+    if (mongoose.connection.readyState !== 1) {
+      const idx = mockPosts.findIndex(p => p._id === id);
+      if (idx !== -1) {
+        mockPosts[idx] = { ...mockPosts[idx], title, content, image };
+      }
+      return res.json({ success: true });
+    }
+    await Post.findByIdAndUpdate(id, { title, content, image });
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Error updating post:', err);
+    res.status(500).json({ success: false, error: 'Error updating post' });
+  }
+});
+
 // Delete post (Protected)
 app.delete('/api/posts/:id', verifyToken, async (req, res) => {
   try {
     const { id } = req.params;
+    if (mongoose.connection.readyState !== 1) {
+      mockPosts = mockPosts.filter(p => p._id !== id);
+      return res.json({ success: true });
+    }
     await Post.findByIdAndDelete(id);
     res.json({ success: true });
   } catch (err) {
