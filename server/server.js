@@ -13,9 +13,15 @@ app.use(express.json());
 
 // MongoDB Connection (non-blocking)
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/advocates_hyderabad';
-mongoose.connect(MONGO_URI, { serverSelectionTimeoutMS: 2000 })
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.warn('MongoDB offline (non-blocking):', err.message));
+const isLocalDB = MONGO_URI.includes('localhost') || MONGO_URI.includes('127.0.0.1');
+
+if (process.env.VERCEL && isLocalDB) {
+  console.warn('Skipping MongoDB connection on Vercel because MONGO_URI points to localhost.');
+} else {
+  mongoose.connect(MONGO_URI, { serverSelectionTimeoutMS: 2000 })
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => console.warn('MongoDB offline (non-blocking):', err.message));
+}
 
 // Mongoose Schema
 const consultationSchema = new mongoose.Schema({
@@ -144,10 +150,14 @@ app.post('/api/consultations', async (req, res) => {
     }
 
     try {
-      const doc = new Consultation({ name, email, phone, domain, message });
-      await doc.save();
+      if (mongoose.connection.readyState === 1) {
+        const doc = new Consultation({ name, email, phone, domain, message });
+        await doc.save();
+      } else {
+        console.warn('DB save skipped: MongoDB not connected.');
+      }
     } catch (dbErr) {
-      console.warn('DB save skipped:', dbErr.message);
+      console.warn('DB save error:', dbErr.message);
     }
 
     const domainLabel = DOMAIN_LABELS[domain] || domain;
