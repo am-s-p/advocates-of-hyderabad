@@ -150,7 +150,7 @@ const AdminPortal = ({ token, setToken, onExit, fetchPublicPosts }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [postForm, setPostForm] = useState({ id: null, title: '', content: '', image: '' });
 
-  const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5003';
+  const baseUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '' : 'http://localhost:5003');
 
   useEffect(() => {
     if (token) {
@@ -387,7 +387,7 @@ export default function App() {
   // Fetch Posts
   const fetchPosts = async () => {
     try {
-      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5003';
+      const baseUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '' : 'http://localhost:5003');
       const response = await fetch(`${baseUrl}/api/posts`);
       if (response.ok) {
         const data = await response.json();
@@ -543,7 +543,7 @@ export default function App() {
     setCareerServerError('');
 
     try {
-      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5003';
+      const baseUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '' : 'http://localhost:5003');
       const response = await fetch(`${baseUrl}/api/careers`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
