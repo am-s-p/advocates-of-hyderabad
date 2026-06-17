@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 
@@ -27,6 +28,21 @@ const consultationSchema = new mongoose.Schema({
 });
 
 const Consultation = mongoose.model('Consultation', consultationSchema);
+
+// Post Schema
+const postSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  content: { type: String, required: true },
+  image: { type: String }, // Base64 encoded image or URL
+  createdAt: { type: Date, default: Date.now }
+});
+
+const Post = mongoose.model('Post', postSchema);
+
+// Admin Credentials
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
+const JWT_SECRET = process.env.JWT_SECRET || 'super-secret-key-advocates-hyderabad-123';
 
 // Domain Labels
 const DOMAIN_LABELS = {
@@ -188,6 +204,70 @@ app.get('/api/health', (req, res) => {
     emailConfigured: !!(process.env.EMAIL_USER && process.env.EMAIL_PASS),
     emailRecipient: process.env.EMAIL_TO || 'amey9909@gmail.com'
   });
+});
+
+// ─── Post & Auth Routes ──────────────────────────────────────────────────────
+
+// Admin Login
+app.post('/api/login', (req, res) => {
+  const { username, password } = req.body;
+  if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+    const token = jwt.sign({ username, role: 'admin' }, JWT_SECRET, { expiresIn: '24h' });
+    return res.json({ success: true, token });
+  }
+  return res.status(401).json({ success: false, error: 'Invalid credentials' });
+});
+
+// JWT Middleware
+const verifyToken = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(403).json({ success: false, error: 'Unauthorized' });
+  }
+  const token = authHeader.split(' ')[1];
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch (err) {
+    return res.status(403).json({ success: false, error: 'Invalid token' });
+  }
+};
+
+// Get all posts (Public)
+app.get('/api/posts', async (req, res) => {
+  try {
+    const posts = await Post.find().sort({ createdAt: -1 });
+    res.json({ success: true, posts });
+  } catch (err) {
+    console.error('Error fetching posts:', err);
+    res.status(500).json({ success: false, error: 'Error fetching posts' });
+  }
+});
+
+// Create post (Protected)
+app.post('/api/posts', verifyToken, async (req, res) => {
+  try {
+    const { title, content, image } = req.body;
+    const newPost = new Post({ title, content, image });
+    await newPost.save();
+    res.status(201).json({ success: true, post: newPost });
+  } catch (err) {
+    console.error('Error creating post:', err);
+    res.status(500).json({ success: false, error: 'Error creating post' });
+  }
+});
+
+// Delete post (Protected)
+app.delete('/api/posts/:id', verifyToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Post.findByIdAndDelete(id);
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Error deleting post:', err);
+    res.status(500).json({ success: false, error: 'Error deleting post' });
+  }
 });
 
 // Export for Vercel serverless (and also listen for local dev)

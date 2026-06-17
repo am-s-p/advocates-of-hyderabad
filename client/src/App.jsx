@@ -142,12 +142,217 @@ const LogoIcon = ({ size = 36 }) => (
   </svg>
 );
 
+const AdminPortal = ({ token, setToken, onExit, fetchPublicPosts }) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
+  const [posts, setPosts] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [postForm, setPostForm] = useState({ id: null, title: '', content: '', image: '' });
+
+  const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5003';
+
+  useEffect(() => {
+    if (token) {
+      fetchAdminPosts();
+    }
+  }, [token]);
+
+  const fetchAdminPosts = async () => {
+    try {
+      const res = await fetch(`${baseUrl}/api/posts`);
+      if (res.ok) {
+        const data = await res.json();
+        setPosts(data.posts || []);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoginError('');
+    setIsSubmitting(true);
+    try {
+      const res = await fetch(`${baseUrl}/api/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+      const data = await res.json();
+      if (data.success && data.token) {
+        setToken(data.token);
+        localStorage.setItem('adminToken', data.token);
+      } else {
+        setLoginError(data.error || 'Login failed');
+      }
+    } catch (err) {
+      setLoginError('Network error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleLogout = () => {
+    setToken(null);
+    localStorage.removeItem('adminToken');
+    setPostForm({ id: null, title: '', content: '', image: '' });
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPostForm(prev => ({ ...prev, image: reader.result }));
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleSavePost = async (e) => {
+    e.preventDefault();
+    if (!postForm.title || !postForm.content) return;
+    setIsSubmitting(true);
+    try {
+      const method = postForm.id ? 'PUT' : 'POST';
+      const url = postForm.id ? `${baseUrl}/api/posts/${postForm.id}` : `${baseUrl}/api/posts`;
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ title: postForm.title, content: postForm.content, image: postForm.image })
+      });
+      if (res.ok) {
+        setPostForm({ id: null, title: '', content: '', image: '' });
+        fetchAdminPosts();
+        fetchPublicPosts(); // refresh public feed
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleDeletePost = async (id) => {
+    if (!confirm('Are you sure you want to delete this post?')) return;
+    try {
+      const res = await fetch(`${baseUrl}/api/posts/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        fetchAdminPosts();
+        fetchPublicPosts();
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleEditClick = (post) => {
+    setPostForm({ id: post._id, title: post.title, content: post.content, image: post.image || '' });
+    window.scrollTo(0, 0);
+  };
+
+  if (!token) {
+    return (
+      <div className="admin-login-wrapper">
+        <div className="admin-login-card">
+          <button className="admin-back-btn" onClick={onExit}>← Back to Main Site</button>
+          <h2>Team Login</h2>
+          <p>Sign in to manage firm updates and posts.</p>
+          <form onSubmit={handleLogin}>
+            <div className="form-group">
+              <label>Username</label>
+              <input type="text" value={username} onChange={e => setUsername(e.target.value)} required />
+            </div>
+            <div className="form-group">
+              <label>Password</label>
+              <input type="password" value={password} onChange={e => setPassword(e.target.value)} required />
+            </div>
+            {loginError && <p className="error-msg">{loginError}</p>}
+            <button type="submit" className="btn btn-primary btn-block" disabled={isSubmitting}>
+              {isSubmitting ? 'Authenticating...' : 'Login'}
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="admin-dashboard">
+      <header className="admin-header">
+        <div className="admin-header-content">
+          <h2>Firm Admin Portal</h2>
+          <div className="admin-actions">
+            <button className="btn btn-secondary" onClick={handleLogout}>Logout</button>
+            <button className="btn btn-primary" onClick={onExit}>View Public Site →</button>
+          </div>
+        </div>
+      </header>
+      
+      <div className="admin-content-grid">
+        <div className="admin-form-panel">
+          <h3>{postForm.id ? 'Edit Post' : 'Create New Post'}</h3>
+          <form onSubmit={handleSavePost}>
+            <div className="form-group">
+              <label>Post Title</label>
+              <input type="text" value={postForm.title} onChange={e => setPostForm(prev => ({...prev, title: e.target.value}))} required placeholder="e.g. Landmark Judgment in Apex Court" />
+            </div>
+            <div className="form-group">
+              <label>Post Content</label>
+              <textarea value={postForm.content} onChange={e => setPostForm(prev => ({...prev, content: e.target.value}))} required rows="6" placeholder="Write your insight, thought, or update here..."></textarea>
+            </div>
+            <div className="form-group">
+              <label>Image Attachment (Optional)</label>
+              <input type="file" accept="image/*" onChange={handleImageUpload} />
+              {postForm.image && <div className="image-preview"><img src={postForm.image} alt="Preview" /></div>}
+            </div>
+            <div className="admin-form-actions">
+              {postForm.id && <button type="button" className="btn btn-secondary" onClick={() => setPostForm({ id: null, title: '', content: '', image: '' })}>Cancel Edit</button>}
+              <button type="submit" className="btn btn-primary" disabled={isSubmitting}>{isSubmitting ? 'Saving...' : (postForm.id ? 'Update Post' : 'Publish Post')}</button>
+            </div>
+          </form>
+        </div>
+
+        <div className="admin-posts-list">
+          <h3>Recent Posts</h3>
+          {posts.length === 0 ? <p className="text-muted">No posts yet.</p> : (
+            <div className="admin-posts-stack">
+              {posts.map(post => (
+                <div key={post._id} className="admin-post-card">
+                  {post.image && <img src={post.image} alt={post.title} className="admin-post-thumb" />}
+                  <div className="admin-post-info">
+                    <h4>{post.title}</h4>
+                    <span className="post-date">{new Date(post.createdAt).toLocaleDateString()}</span>
+                    <div className="admin-post-actions">
+                      <button onClick={() => handleEditClick(post)}>Edit</button>
+                      <button className="text-danger" onClick={() => handleDeletePost(post._id)}>Delete</button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function App() {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeQuote, setActiveQuote] = useState(0);
   const [activeModal, setActiveModal] = useState(null);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  
+  // App View & Auth State
+  const [currentView, setCurrentView] = useState('home'); // 'home' | 'admin'
+  const [adminToken, setAdminToken] = useState(localStorage.getItem('adminToken') || null);
+  const [posts, setPosts] = useState([]);
 
   const [formState, setFormState] = useState({ name: '', email: '', phone: '', domain: '', message: '' });
   const [formErrors, setFormErrors] = useState({ name: false, email: false, domain: false });
@@ -178,6 +383,24 @@ export default function App() {
     document.addEventListener('click', handler);
     return () => document.removeEventListener('click', handler);
   }, [mobileNavOpen]);
+
+  // Fetch Posts
+  const fetchPosts = async () => {
+    try {
+      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5003';
+      const response = await fetch(`${baseUrl}/api/posts`);
+      if (response.ok) {
+        const data = await response.json();
+        setPosts(data.posts || []);
+      }
+    } catch (err) {
+      console.error('Failed to fetch posts:', err);
+    }
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   // Lock body scroll when modal open
   useEffect(() => {
@@ -372,17 +595,20 @@ export default function App() {
       {/* ═══ NAVIGATION ═══ */}
       <nav className={`nav-bar ${isScrolled ? 'scrolled' : ''}`} id="navbar" role="navigation" aria-label="Main navigation">
         <div className="nav-container">
-          <a href="#" className="nav-logo" aria-label="Advocates of Hyderabad – Home" onClick={(e) => handleNavClick(e, '#about')}>
+          <a href="#" className="nav-logo" aria-label="Advocates of Hyderabad – Home" onClick={(e) => { e.preventDefault(); setCurrentView('home'); window.scrollTo(0, 0); }}>
             <LogoIcon size={36} />
             <span className="logo-text">ADVOCATES OF HYDERABAD</span>
           </a>
 
           {/* Desktop Nav */}
           <ul className="nav-links" role="list">
-            <li><a href="#about" className="nav-link" onClick={(e) => handleNavClick(e, '#about')}>About</a></li>
-            <li><a href="#quotes" className="nav-link" onClick={(e) => handleNavClick(e, '#quotes')}>Philosophy</a></li>
-            <li><a href="#team" className="nav-link" onClick={(e) => handleNavClick(e, '#team')}>Counsel</a></li>
-            <li><a href="#contact" className="nav-link button-outline" onClick={(e) => handleNavClick(e, '#contact')}>Consultation</a></li>
+            <li><a href="#about" className="nav-link" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#about'); }}>About</a></li>
+            <li><a href="#quotes" className="nav-link" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#quotes'); }}>Philosophy</a></li>
+            <li><a href="#posts" className="nav-link" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#posts'); }}>Posts</a></li>
+            <li><a href="#team" className="nav-link" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#team'); }}>Counsel</a></li>
+            <li><a href="#reviews" className="nav-link" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#reviews'); }}>Reviews</a></li>
+            <li><a href="#careers" className="nav-link" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#careers'); }}>Connect</a></li>
+            <li><a href="#contact" className="nav-link button-outline" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#contact'); }}>Consultation</a></li>
           </ul>
 
           <div className="nav-right">
@@ -396,6 +622,7 @@ export default function App() {
                 <path d="M2 12h20"></path>
               </svg>
             </button>
+            <button className="nav-link" onClick={() => setCurrentView('admin')} style={{ background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '0.9rem', fontWeight: '500', color: 'var(--text-secondary)' }}>Team Login</button>
 
             {/* Hamburger */}
             <button
@@ -413,10 +640,14 @@ export default function App() {
         {/* Mobile Nav Drawer */}
         <div className={`mobile-nav ${mobileNavOpen ? 'open' : ''}`} aria-hidden={!mobileNavOpen}>
           <ul role="list">
-            <li><a href="#about" onClick={(e) => handleNavClick(e, '#about')}>About</a></li>
-            <li><a href="#quotes" onClick={(e) => handleNavClick(e, '#quotes')}>Philosophy</a></li>
-            <li><a href="#team" onClick={(e) => handleNavClick(e, '#team')}>Counsel</a></li>
-            <li><a href="#contact" className="mobile-cta" onClick={(e) => handleNavClick(e, '#contact')}>Book Consultation</a></li>
+            <li><a href="#about" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#about'); }}>About</a></li>
+            <li><a href="#quotes" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#quotes'); }}>Philosophy</a></li>
+            <li><a href="#posts" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#posts'); }}>Posts</a></li>
+            <li><a href="#team" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#team'); }}>Counsel</a></li>
+            <li><a href="#reviews" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#reviews'); }}>Reviews</a></li>
+            <li><a href="#careers" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#careers'); }}>Connect</a></li>
+            <li><a href="#contact" className="mobile-cta" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#contact'); }}>Book Consultation</a></li>
+            <li><button onClick={() => { setCurrentView('admin'); setMobileNavOpen(false); }} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--accent-color)', fontSize: '1rem', marginTop: '16px', fontWeight: 'bold' }}>Team Login</button></li>
           </ul>
           <div className="mobile-nav-contact">
             <a href="tel:+919493456771">📞 +91 94934 56771</a>
@@ -425,7 +656,9 @@ export default function App() {
         </div>
       </nav>
 
-      {/* ═══ HERO SECTION ═══ */}
+      {currentView === 'home' && (
+        <>
+          {/* ═══ HERO SECTION ═══ */}
       <section className="hero" id="about" aria-label="About Advocates of Hyderabad">
         <div className="hero-bg-overlay" aria-hidden="true"></div>
         <div className="hero-content">
@@ -512,6 +745,38 @@ export default function App() {
               </button>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ═══ POSTS / UPDATES SECTION ═══ */}
+      <section className="posts-section" id="posts" aria-label="Insights and Updates" style={{ backgroundColor: 'var(--bg-secondary)', padding: '5rem 0' }}>
+        <div className="container">
+          <div className="section-header text-center">
+            <span className="section-subtitle" style={{ color: 'var(--accent-color)', fontSize: '0.9rem', fontWeight: '600', letterSpacing: '2px', textTransform: 'uppercase' }}>Insights & Updates</span>
+            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', margin: '1rem 0' }}><span className="serif-title">Firm</span> Perspectives</h2>
+          </div>
+          {posts.length === 0 ? (
+            <p className="text-center text-muted" style={{ padding: '2rem 0' }}>Stay tuned for updates.</p>
+          ) : (
+            <div className="posts-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem', marginTop: '3rem' }}>
+              {posts.map(post => (
+                <div key={post._id} className="post-card" style={{ background: 'var(--bg-color)', border: '1px solid var(--border-color)', borderRadius: '12px', overflow: 'hidden', transition: 'transform 0.3s ease, box-shadow 0.3s ease' }}>
+                  {post.image && (
+                    <div className="post-image-wrapper" style={{ width: '100%', height: '220px', overflow: 'hidden' }}>
+                      <img src={post.image} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    </div>
+                  )}
+                  <div className="post-content" style={{ padding: '1.5rem' }}>
+                    <span className="post-date" style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.5rem' }}>
+                      {new Date(post.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
+                    </span>
+                    <h3 className="post-title" style={{ fontSize: '1.25rem', marginBottom: '1rem', lineHeight: '1.4' }}>{post.title}</h3>
+                    <p className="post-excerpt" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: '1.6', whiteSpace: 'pre-wrap' }}>{post.content}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -876,91 +1141,90 @@ export default function App() {
       </section>
 
       {/* ═══ CAREERS / FIRST GEN LAWYERS SECTION ═══ */}
-      <section className="contact-section" id="careers" aria-label="First Generation Lawyers Connect" style={{ backgroundColor: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)' }}>
+      <section className="first-gen-section" id="careers" aria-label="First Generation Lawyers Connect">
         <div className="container">
-          <div className="contact-grid">
-            <div className="contact-info">
-              <h2><span className="serif-title">First-Gen</span> Lawyers Connect</h2>
-              <p className="contact-subtitle">
+          <div className="first-gen-grid">
+            <div className="first-gen-info">
+              <span className="section-subtitle">Join The Team</span>
+              <h2><span className="serif-title">First-Gen</span><br/>Lawyers Connect</h2>
+              <p className="first-gen-desc">
                 Are you a first-generation lawyer looking for mentorship, guidance, or an opportunity to work with us? We believe in nurturing raw talent and providing a platform for the next generation of legal minds.
               </p>
-              <div className="info-cards">
-                <div className="info-card">
-                  <span className="info-icon">🎓</span>
-                  <div>
+              <div className="first-gen-perks">
+                <div className="perk-item">
+                  <div className="perk-icon">🎓</div>
+                  <div className="perk-text">
                     <h4>Mentorship</h4>
-                    <p>Learn from seasoned advocates with decades of trial experience.</p>
+                    <p>Learn directly from seasoned trial advocates.</p>
                   </div>
                 </div>
-                <div className="info-card">
-                  <span className="info-icon">💼</span>
-                  <div>
-                    <h4>Career Growth</h4>
-                    <p>Gain exposure to high-stakes constitutional, criminal, and corporate matters.</p>
+                <div className="perk-item">
+                  <div className="perk-icon">💼</div>
+                  <div className="perk-text">
+                    <h4>High-Stakes Exposure</h4>
+                    <p>Work on complex constitutional and corporate matters.</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="contact-form-panel">
+            <div className="first-gen-form-container">
               {!isCareerSuccess ? (
-                <div className="form-wrapper">
-                  <h3>Get in Touch</h3>
-                  <form onSubmit={handleCareerSubmit} noValidate>
-                    <div className="form-row">
-                      <div className="form-group">
-                        <label htmlFor="career-name">Full Name *</label>
-                        <input
-                          type="text"
-                          id="career-name"
-                          name="name"
-                          value={careerFormState.name}
-                          onChange={handleCareerInputChange}
-                          className={careerFormErrors.name ? 'error' : ''}
-                          placeholder="Your Name"
-                          aria-required="true"
-                        />
-                        {careerFormErrors.name && <span className="error-msg">Name is required</span>}
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="career-email">Email Address *</label>
-                        <input
-                          type="email"
-                          id="career-email"
-                          name="email"
-                          value={careerFormState.email}
-                          onChange={handleCareerInputChange}
-                          className={careerFormErrors.email ? 'error' : ''}
-                          placeholder="your.email@example.com"
-                          aria-required="true"
-                        />
-                        {careerFormErrors.email && <span className="error-msg">Valid email is required</span>}
-                      </div>
+                <div className="form-card">
+                  <h3>Start Your Journey</h3>
+                  <form onSubmit={handleCareerSubmit} noValidate className="modern-form">
+                    <div className="form-group floating">
+                      <input
+                        type="text"
+                        id="career-name"
+                        name="name"
+                        value={careerFormState.name}
+                        onChange={handleCareerInputChange}
+                        className={careerFormErrors.name ? 'error' : ''}
+                        placeholder=" "
+                        aria-required="true"
+                      />
+                      <label htmlFor="career-name">Full Name *</label>
+                      {careerFormErrors.name && <span className="error-msg">Name is required</span>}
                     </div>
 
-                    <div className="form-row">
-                      <div className="form-group">
-                        <label htmlFor="career-phone">Phone Number</label>
+                    <div className="form-group floating">
+                      <input
+                        type="email"
+                        id="career-email"
+                        name="email"
+                        value={careerFormState.email}
+                        onChange={handleCareerInputChange}
+                        className={careerFormErrors.email ? 'error' : ''}
+                        placeholder=" "
+                        aria-required="true"
+                      />
+                      <label htmlFor="career-email">Email Address *</label>
+                      {careerFormErrors.email && <span className="error-msg">Valid email is required</span>}
+                    </div>
+
+                    <div className="form-row split">
+                      <div className="form-group floating">
                         <input
                           type="tel"
                           id="career-phone"
                           name="phone"
                           value={careerFormState.phone}
                           onChange={handleCareerInputChange}
-                          placeholder="+91"
+                          placeholder=" "
                         />
+                        <label htmlFor="career-phone">Phone (Optional)</label>
                       </div>
                       <div className="form-group">
-                        <label htmlFor="career-interest">Area of Interest *</label>
                         <select
                           id="career-interest"
                           name="interest"
                           value={careerFormState.interest}
                           onChange={handleCareerInputChange}
-                          className={careerFormErrors.interest ? 'error' : ''}
+                          className={`modern-select ${careerFormErrors.interest ? 'error' : ''}`}
                           aria-required="true"
                         >
-                          <option value="" disabled>Select an area...</option>
+                          <option value="" disabled>Select Area of Interest *</option>
                           <option value="Litigation">Litigation & Trial</option>
                           <option value="Corporate">Corporate & Financial</option>
                           <option value="Research">Legal Research & Drafting</option>
@@ -970,18 +1234,16 @@ export default function App() {
                       </div>
                     </div>
 
-                    <div className="form-row">
-                      <div className="form-group">
-                        <label htmlFor="career-message">Your Background / Why connect? <span className="optional-tag">(Optional)</span></label>
-                        <textarea
-                          id="career-message"
-                          name="message"
-                          value={careerFormState.message}
-                          onChange={handleCareerInputChange}
-                          rows="4"
-                          placeholder="Tell us a bit about your journey..."
-                        ></textarea>
-                      </div>
+                    <div className="form-group floating">
+                      <textarea
+                        id="career-message"
+                        name="message"
+                        value={careerFormState.message}
+                        onChange={handleCareerInputChange}
+                        rows="3"
+                        placeholder=" "
+                      ></textarea>
+                      <label htmlFor="career-message">Your Background / Why connect?</label>
                     </div>
 
                     {careerServerError && (
@@ -1003,8 +1265,8 @@ export default function App() {
                         <span>🎓 Apply to Connect</span>
                       )}
                     </button>
-                    <p className="form-note" aria-live="polite">
-                      Your details will be emailed directly to our team at <strong>amey9909@gmail.com</strong>.
+                    <p className="form-note text-center">
+                      Your details will be emailed directly to our team.
                     </p>
                   </form>
                 </div>
@@ -1016,9 +1278,9 @@ export default function App() {
                       <path className="success-checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
                     </svg>
                   </div>
-                  <h3 className="success-title">Request Sent! ✅</h3>
+                  <h3 className="success-title">Application Sent!</h3>
                   <p className="success-text">
-                    Your connection request has been sent to our team. We review all applications and will reach out if there's a fit!
+                    We've received your request and will review your profile shortly. Keep an eye on your inbox!
                   </p>
                   <button className="btn btn-secondary" onClick={resetCareerForm}>Submit Another</button>
                 </div>
@@ -1027,6 +1289,12 @@ export default function App() {
           </div>
         </div>
       </section>
+        </>
+      )}
+
+      {currentView === 'admin' && (
+        <AdminPortal token={adminToken} setToken={setAdminToken} onExit={() => setCurrentView('home')} fetchPublicPosts={fetchPosts} />
+      )}
 
       {/* ═══ FOOTER ═══ */}
       <footer className="site-footer" role="contentinfo">
