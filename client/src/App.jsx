@@ -317,25 +317,25 @@ const AdminPortal = ({ token, setToken, onExit, fetchPublicPosts }) => {
     <div className="admin-dashboard">
       <header className="admin-header">
         <div className="admin-header-content">
-          <h2>Firm Admin Portal</h2>
+          <h2>Admin Portal</h2>
           <div className="admin-actions">
             <button className="btn btn-secondary" onClick={handleLogout}>Logout</button>
             <button className="btn btn-primary" onClick={onExit}>View Public Site →</button>
           </div>
         </div>
       </header>
-      
+
       <div className="admin-content-grid">
         <div className="admin-form-panel">
           <h3>{postForm.id ? 'Edit Post' : 'Create New Post'}</h3>
           <form onSubmit={handleSavePost}>
             <div className="form-group">
               <label>Post Title</label>
-              <input type="text" value={postForm.title} onChange={e => setPostForm(prev => ({...prev, title: e.target.value}))} required placeholder="e.g. Landmark Judgment in Apex Court" />
+              <input type="text" value={postForm.title} onChange={e => setPostForm(prev => ({ ...prev, title: e.target.value }))} required placeholder="e.g. Landmark Judgment in Apex Court" />
             </div>
             <div className="form-group">
               <label>Post Content</label>
-              <textarea value={postForm.content} onChange={e => setPostForm(prev => ({...prev, content: e.target.value}))} required rows="6" placeholder="Write your insight, thought, or update here..."></textarea>
+              <textarea value={postForm.content} onChange={e => setPostForm(prev => ({ ...prev, content: e.target.value }))} required rows="6" placeholder="Write your insight, thought, or update here..."></textarea>
             </div>
             <div className="form-group">
               <label>Image Attachment (Optional)</label>
@@ -380,7 +380,7 @@ export default function App() {
   const [activeQuote, setActiveQuote] = useState(0);
   const [activeModal, setActiveModal] = useState(null);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
-  
+
   // App View & Auth State
   const [currentView, setCurrentView] = useState('home'); // 'home' | 'admin'
   const [adminToken, setAdminToken] = useState(localStorage.getItem('adminToken') || null);
@@ -558,7 +558,7 @@ export default function App() {
 
   const handleCareerSubmit = async (e) => {
     e.preventDefault();
-    
+
     const errors = {
       name: !careerFormState.name.trim(),
       email: !validateEmail(careerFormState.email),
@@ -626,703 +626,703 @@ export default function App() {
     <>
       {/* ═══ NAVIGATION ═══ */}
       {currentView !== 'admin' && (
-      <nav className={`nav-bar ${isScrolled ? 'scrolled' : ''}`} id="navbar" role="navigation" aria-label="Main navigation">
-        <div className="nav-container">
-          <a href="#" className="nav-logo" aria-label="Advocates of Hyderabad – Home" onClick={(e) => { e.preventDefault(); setCurrentView('home'); window.scrollTo(0, 0); }}>
-            <LogoIcon size={36} />
-            <span className="logo-text">ADVOCATES OF HYDERABAD</span>
-          </a>
+        <nav className={`nav-bar ${isScrolled ? 'scrolled' : ''}`} id="navbar" role="navigation" aria-label="Main navigation">
+          <div className="nav-container">
+            <a href="#" className="nav-logo" aria-label="Advocates of Hyderabad – Home" onClick={(e) => { e.preventDefault(); setCurrentView('home'); window.scrollTo(0, 0); }}>
+              <LogoIcon size={36} />
+              <span className="logo-text">ADVOCATES OF HYDERABAD</span>
+            </a>
 
-          {/* Desktop Nav */}
-          <ul className="nav-links" role="list">
-            <li><a href="#about" className="nav-link" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#about'); }}>About</a></li>
-            <li><a href="#quotes" className="nav-link" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#quotes'); }}>Philosophy</a></li>
-            <li><a href="#posts" className="nav-link" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#posts'); }}>Posts</a></li>
-            <li><a href="#team" className="nav-link" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#team'); }}>Counsel</a></li>
-            <li><a href="#reviews" className="nav-link" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#reviews'); }}>Reviews</a></li>
-            <li><a href="#careers" className="nav-link" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#careers'); }}>Connect</a></li>
-            <li><a href="#contact" className="nav-link button-outline" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#contact'); }}>Consultation</a></li>
-          </ul>
+            {/* Desktop Nav */}
+            <ul className="nav-links" role="list">
+              <li><a href="#about" className="nav-link" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#about'); }}>About</a></li>
+              <li><a href="#quotes" className="nav-link" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#quotes'); }}>Philosophy</a></li>
+              <li><a href="#posts" className="nav-link" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#posts'); }}>Posts</a></li>
+              <li><a href="#team" className="nav-link" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#team'); }}>Counsel</a></li>
+              <li><a href="#reviews" className="nav-link" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#reviews'); }}>Reviews</a></li>
+              <li><a href="#careers" className="nav-link" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#careers'); }}>Connect</a></li>
+              <li><a href="#contact" className="nav-link button-outline" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#contact'); }}>Consultation</a></li>
+            </ul>
 
-          <div className="nav-right">
-            <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle light/dark theme" id="theme-toggle-btn">
-              <svg className="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M12 2v20"></path>
-              </svg>
-              <svg className="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M2 12h20"></path>
-              </svg>
-            </button>
-            <button className="nav-link" onClick={() => setCurrentView('admin')} style={{ background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '0.9rem', fontWeight: '500', color: 'var(--text-secondary)' }}>Team Login</button>
+            <div className="nav-right">
+              <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle light/dark theme" id="theme-toggle-btn">
+                <svg className="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 2v20"></path>
+                </svg>
+                <svg className="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M2 12h20"></path>
+                </svg>
+              </button>
+              <button className="nav-link" onClick={() => setCurrentView('admin')} style={{ background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '0.9rem', fontWeight: '500', color: 'var(--text-secondary)' }}>Team Login</button>
 
-            {/* Hamburger */}
-            <button
-              className={`hamburger ${mobileNavOpen ? 'open' : ''}`}
-              onClick={(e) => { e.stopPropagation(); setMobileNavOpen((v) => !v); }}
-              aria-label="Toggle mobile menu"
-              aria-expanded={mobileNavOpen}
-              id="hamburger-btn"
-            >
-              <span></span><span></span><span></span>
-            </button>
+              {/* Hamburger */}
+              <button
+                className={`hamburger ${mobileNavOpen ? 'open' : ''}`}
+                onClick={(e) => { e.stopPropagation(); setMobileNavOpen((v) => !v); }}
+                aria-label="Toggle mobile menu"
+                aria-expanded={mobileNavOpen}
+                id="hamburger-btn"
+              >
+                <span></span><span></span><span></span>
+              </button>
+            </div>
           </div>
-        </div>
 
-        {/* Mobile Nav Drawer */}
-        <div className={`mobile-nav ${mobileNavOpen ? 'open' : ''}`} aria-hidden={!mobileNavOpen}>
-          <ul role="list">
-            <li><a href="#about" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#about'); }}>About</a></li>
-            <li><a href="#quotes" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#quotes'); }}>Philosophy</a></li>
-            <li><a href="#posts" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#posts'); }}>Posts</a></li>
-            <li><a href="#team" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#team'); }}>Counsel</a></li>
-            <li><a href="#reviews" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#reviews'); }}>Reviews</a></li>
-            <li><a href="#careers" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#careers'); }}>Connect</a></li>
-            <li><a href="#contact" className="mobile-cta" onClick={(e) => { if(currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#contact'); }}>Book Consultation</a></li>
-            <li><button onClick={() => { setCurrentView('admin'); setMobileNavOpen(false); }} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--accent-color)', fontSize: '1rem', marginTop: '16px', fontWeight: 'bold' }}>Team Login</button></li>
-          </ul>
-          <div className="mobile-nav-contact">
-            <a href="tel:+919493456771">📞 +91 94934 56771</a>
-            <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">💬 WhatsApp Us</a>
+          {/* Mobile Nav Drawer */}
+          <div className={`mobile-nav ${mobileNavOpen ? 'open' : ''}`} aria-hidden={!mobileNavOpen}>
+            <ul role="list">
+              <li><a href="#about" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#about'); }}>About</a></li>
+              <li><a href="#quotes" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#quotes'); }}>Philosophy</a></li>
+              <li><a href="#posts" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#posts'); }}>Posts</a></li>
+              <li><a href="#team" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#team'); }}>Counsel</a></li>
+              <li><a href="#reviews" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#reviews'); }}>Reviews</a></li>
+              <li><a href="#careers" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#careers'); }}>Connect</a></li>
+              <li><a href="#contact" className="mobile-cta" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#contact'); }}>Book Consultation</a></li>
+              <li><button onClick={() => { setCurrentView('admin'); setMobileNavOpen(false); }} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--accent-color)', fontSize: '1rem', marginTop: '16px', fontWeight: 'bold' }}>Team Login</button></li>
+            </ul>
+            <div className="mobile-nav-contact">
+              <a href="tel:+919493456771">📞 +91 94934 56771</a>
+              <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">💬 WhatsApp Us</a>
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
       )}
 
       {currentView === 'home' && (
         <>
           {/* ═══ HERO SECTION ═══ */}
-      <section className="hero" id="about" aria-label="About Advocates of Hyderabad">
-        <div className="hero-bg-overlay" aria-hidden="true"></div>
-        <div className="hero-content">
-          <div className="hero-badge" aria-label="Established 1998">EST. 2016</div>
-          <h1 className="hero-title">
-            Not Just A Lawyer,<br />
-            <span className="serif-title">Your Legal Shield.</span>
-          </h1>
-          <p className="hero-subtitle">
-            Advocates of Hyderabad — premier legal representation in Criminology, Civil litigation, Divorce disputes, and Corporate Financial legal counsel. Serving India
-          </p>
-          <div className="hero-actions">
-            <a href="#team" className="btn btn-primary" id="meet-counsel-btn" onClick={(e) => handleNavClick(e, '#team')}>Meet Our Counsel</a>
-            <a href="#contact" className="btn btn-secondary" id="case-review-btn" onClick={(e) => handleNavClick(e, '#contact')}>Request Case Review</a>
-          </div>
-
-          {/* Trust Badges */}
-          <div className="hero-trust-row" aria-label="Trust signals">
-            <div className="trust-badge">
-              <span className="trust-num">9+</span>
-              <span className="trust-label">Years Experience</span>
-            </div>
-            <div className="trust-divider" aria-hidden="true"></div>
-            <div className="trust-badge">
-              <span className="trust-num">200+</span>
-              <span className="trust-label">Cases Won</span>
-            </div>
-            <div className="trust-divider" aria-hidden="true"></div>
-            <div className="trust-badge">
-              <span className="trust-num">4</span>
-              <span className="trust-label">Legal Domains</span>
-            </div>
-          </div>
-
-          <div className="scroll-indicator" aria-hidden="true">
-            <span className="scroll-text">Explore Philosophy</span>
-            <div className="scroll-mouse">
-              <div className="scroll-wheel"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ QUOTES SECTION ═══ */}
-      <section className="quotes-section" id="quotes" aria-label="Legal philosophy quotes">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-tag">Philosophy</span>
-            <h2 className="section-title">Guided by Truth</h2>
-          </div>
-
-          <div className="quote-slider-container" role="region" aria-label="Legal quotes carousel" aria-live="polite">
-            {QUOTES.map((q, idx) => (
-              <div
-                key={idx}
-                className={`quote-slide ${activeQuote === idx ? 'active' : ''}`}
-                style={{ display: activeQuote === idx ? 'block' : 'none' }}
-                role="blockquote"
-              >
-                <span className="quote-mark" aria-hidden="true">"</span>
-                <p className="quote-text">{q.text}</p>
-                <cite className="quote-author">— {q.author}</cite>
+          <section className="hero" id="about" aria-label="About Advocates of Hyderabad">
+            <div className="hero-bg-overlay" aria-hidden="true"></div>
+            <div className="hero-content">
+              <div className="hero-badge" aria-label="Established 1998">EST. 2016</div>
+              <h1 className="hero-title">
+                Not Just A Lawyer,<br />
+                <span className="serif-title">Your Legal Shield.</span>
+              </h1>
+              <p className="hero-subtitle">
+                Advocates of Hyderabad — premier legal representation in Criminology, Civil litigation, Divorce disputes, and Corporate Financial legal counsel. Serving India
+              </p>
+              <div className="hero-actions">
+                <a href="#team" className="btn btn-primary" id="meet-counsel-btn" onClick={(e) => handleNavClick(e, '#team')}>Meet Our Counsel</a>
+                <a href="#contact" className="btn btn-secondary" id="case-review-btn" onClick={(e) => handleNavClick(e, '#contact')}>Request Case Review</a>
               </div>
-            ))}
 
-            <div className="quote-controls" role="group" aria-label="Quote navigation">
-              <button className="quote-btn" onClick={handlePrevQuote} aria-label="Previous quote" id="prev-quote-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
-              </button>
-              <div className="quote-dots">
-                {QUOTES.map((_, idx) => (
-                  <button
+              {/* Trust Badges */}
+              <div className="hero-trust-row" aria-label="Trust signals">
+                <div className="trust-badge">
+                  <span className="trust-num">9+</span>
+                  <span className="trust-label">Years Experience</span>
+                </div>
+                <div className="trust-divider" aria-hidden="true"></div>
+                <div className="trust-badge">
+                  <span className="trust-num">200+</span>
+                  <span className="trust-label">Cases Won</span>
+                </div>
+                <div className="trust-divider" aria-hidden="true"></div>
+                <div className="trust-badge">
+                  <span className="trust-num">4</span>
+                  <span className="trust-label">Legal Domains</span>
+                </div>
+              </div>
+
+              <div className="scroll-indicator" aria-hidden="true">
+                <span className="scroll-text">Explore Philosophy</span>
+                <div className="scroll-mouse">
+                  <div className="scroll-wheel"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* ═══ QUOTES SECTION ═══ */}
+          <section className="quotes-section" id="quotes" aria-label="Legal philosophy quotes">
+            <div className="container">
+              <div className="section-header">
+                <span className="section-tag">Philosophy</span>
+                <h2 className="section-title">Guided by Truth</h2>
+              </div>
+
+              <div className="quote-slider-container" role="region" aria-label="Legal quotes carousel" aria-live="polite">
+                {QUOTES.map((q, idx) => (
+                  <div
                     key={idx}
-                    className={`dot ${activeQuote === idx ? 'active' : ''}`}
-                    onClick={() => { stopQuoteInterval(); setActiveQuote(idx); }}
-                    aria-label={`Quote ${idx + 1}`}
-                    aria-current={activeQuote === idx ? 'true' : 'false'}
-                    id={`quote-dot-${idx}`}
-                  />
-                ))}
-              </div>
-              <button className="quote-btn" onClick={handleNextQuote} aria-label="Next quote" id="next-quote-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ POSTS / UPDATES SECTION ═══ */}
-      <section className="posts-section" id="posts" aria-label="Insights and Updates" style={{ backgroundColor: 'var(--bg-secondary)', padding: '5rem 0' }}>
-        <div className="container">
-          <div className="section-header text-center">
-            <span className="section-subtitle" style={{ color: 'var(--accent-color)', fontSize: '0.9rem', fontWeight: '600', letterSpacing: '2px', textTransform: 'uppercase' }}>Insights & Updates</span>
-            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', margin: '1rem 0' }}><span className="serif-title">Firm</span> Perspectives</h2>
-          </div>
-          {posts.length === 0 ? (
-            <p className="text-center text-muted" style={{ padding: '2rem 0' }}>Stay tuned for updates.</p>
-          ) : (
-            <div className="posts-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem', marginTop: '3rem' }}>
-              {posts.map(post => (
-                <div key={post._id} className="post-card" style={{ background: 'var(--bg-color)', border: '1px solid var(--border-color)', borderRadius: '12px', overflow: 'hidden', transition: 'transform 0.3s ease, box-shadow 0.3s ease' }}>
-                  {post.image && (
-                    <div className="post-image-wrapper" style={{ width: '100%', height: '220px', overflow: 'hidden' }}>
-                      <img src={post.image} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    </div>
-                  )}
-                  <div className="post-content" style={{ padding: '1.5rem' }}>
-                    <span className="post-date" style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.5rem' }}>
-                      {new Date(post.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
-                    </span>
-                    <h3 className="post-title" style={{ fontSize: '1.25rem', marginBottom: '1rem', lineHeight: '1.4' }}>{post.title}</h3>
-                    <p className="post-excerpt" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: '1.6', whiteSpace: 'pre-wrap' }}>{post.content}</p>
+                    className={`quote-slide ${activeQuote === idx ? 'active' : ''}`}
+                    style={{ display: activeQuote === idx ? 'block' : 'none' }}
+                    role="blockquote"
+                  >
+                    <span className="quote-mark" aria-hidden="true">"</span>
+                    <p className="quote-text">{q.text}</p>
+                    <cite className="quote-author">— {q.author}</cite>
                   </div>
+                ))}
+
+                <div className="quote-controls" role="group" aria-label="Quote navigation">
+                  <button className="quote-btn" onClick={handlePrevQuote} aria-label="Previous quote" id="prev-quote-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
+                  </button>
+                  <div className="quote-dots">
+                    {QUOTES.map((_, idx) => (
+                      <button
+                        key={idx}
+                        className={`dot ${activeQuote === idx ? 'active' : ''}`}
+                        onClick={() => { stopQuoteInterval(); setActiveQuote(idx); }}
+                        aria-label={`Quote ${idx + 1}`}
+                        aria-current={activeQuote === idx ? 'true' : 'false'}
+                        id={`quote-dot-${idx}`}
+                      />
+                    ))}
+                  </div>
+                  <button className="quote-btn" onClick={handleNextQuote} aria-label="Next quote" id="next-quote-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* ═══ POSTS / UPDATES SECTION ═══ */}
+          <section className="posts-section" id="posts" aria-label="Insights and Updates" style={{ backgroundColor: 'var(--bg-secondary)', padding: '5rem 0' }}>
+            <div className="container">
+              <div className="section-header text-center">
+                <span className="section-subtitle" style={{ color: 'var(--accent-color)', fontSize: '0.9rem', fontWeight: '600', letterSpacing: '2px', textTransform: 'uppercase' }}>Insights & Updates</span>
+                <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', margin: '1rem 0' }}><span className="serif-title">Firm</span> Perspectives</h2>
+              </div>
+              {posts.length === 0 ? (
+                <p className="text-center text-muted" style={{ padding: '2rem 0' }}>Stay tuned for updates.</p>
+              ) : (
+                <div className="marquee-container" style={{ marginTop: '3rem' }}>
+                  {[...posts, ...posts].map((post, idx) => (
+                    <div key={`${post._id}-${idx}`} className="post-card review-card" style={{ background: 'var(--bg-color)', border: '1px solid var(--border-color)', borderRadius: '12px', overflow: 'hidden', minWidth: '320px', transition: 'transform 0.3s ease, box-shadow 0.3s ease', display: 'flex', flexDirection: 'column' }}>
+                      {post.image && (
+                        <div className="post-image-wrapper" style={{ width: '100%', height: 'auto', maxHeight: '300px', display: 'flex', justifyContent: 'center', backgroundColor: 'var(--bg-secondary)' }}>
+                          <img src={post.image} alt={post.title} style={{ width: '100%', height: 'auto', maxHeight: '300px', objectFit: 'contain' }} />
+                        </div>
+                      )}
+                      <div className="post-content" style={{ padding: '1.5rem', flexGrow: 1 }}>
+                        <span className="post-date" style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.5rem' }}>
+                          {new Date(post.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
+                        </span>
+                        <h3 className="post-title" style={{ fontSize: '1.25rem', marginBottom: '1rem', lineHeight: '1.4' }}>{post.title}</h3>
+                        <p className="post-excerpt" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: '1.6', whiteSpace: 'pre-wrap' }}>{post.content}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </section>
+
+          {/* ═══ TEAM SECTION ═══ */}
+          <section className="team-section" id="team" aria-label="Our legal team">
+            <div className="container">
+              <div className="section-header">
+                <span className="section-tag">Elite Advocacy</span>
+                <h2 className="section-title">Our Legal Minds</h2>
+                <p className="section-subtitle">Choose a domain expert to review their profile and book a confidential consultation.</p>
+              </div>
+
+              <div className="lawyer-grid" role="list">
+                {Object.keys(LAWYER_DATA).map((key) => {
+                  const lawyer = LAWYER_DATA[key];
+                  return (
+                    <article
+                      key={key}
+                      className="lawyer-card"
+                      onClick={() => setActiveModal(key)}
+                      role="listitem"
+                      tabIndex={0}
+                      onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setActiveModal(key)}
+                      aria-label={`${lawyer.name}, ${lawyer.role} — Click to view profile`}
+                      id={`lawyer-card-${key}`}
+                    >
+                      <div className="lawyer-img-wrapper">
+                        <div className="lawyer-placeholder-graphic" aria-hidden="true">
+                          {lawyer.icon === 'logo' ? <LogoIcon size={70} /> : <span>{lawyer.icon}</span>}
+                        </div>
+                        <div className="lawyer-badge">{lawyer.tag}</div>
+                      </div>
+                      <div className="lawyer-info">
+                        <h3 className="lawyer-name">{lawyer.name}</h3>
+                        <p className="lawyer-title">{lawyer.role}</p>
+                        <p className="lawyer-quote">{lawyer.quote}</p>
+                        <button className="btn btn-card-details" tabIndex={-1} aria-hidden="true">View Profile &amp; Case History</button>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+
+          {/* ═══ LAWYER MODAL ═══ */}
+          {selectedLawyer && (
+            <div
+              className="modal-overlay active"
+              role="dialog"
+              aria-modal="true"
+              aria-label={`${selectedLawyer.name} profile`}
+              onClick={(e) => e.target.classList.contains('modal-overlay') && setActiveModal(null)}
+            >
+              <div className="modal-card">
+                <button className="modal-close" onClick={() => setActiveModal(null)} aria-label="Close modal" id="modal-close-btn">✕</button>
+                <div className="modal-content-grid">
+                  <div className="modal-side-graphic">
+                    <div className="modal-icon" aria-hidden="true">
+                      {selectedLawyer.icon === 'logo' ? <LogoIcon size={80} /> : selectedLawyer.icon}
+                    </div>
+                    <h2 className="modal-lawyer-name">{selectedLawyer.name}</h2>
+                    <p className="modal-lawyer-role">{selectedLawyer.role}</p>
+                    <span className="modal-lawyer-tag">{selectedLawyer.tag}</span>
+                  </div>
+                  <div className="modal-details-body">
+                    <h3 className="modal-subheader">Core Philosophy</h3>
+                    <p className="modal-bio-quote">{selectedLawyer.quote}</p>
+
+                    <h3 className="modal-subheader">Expertise &amp; Experience</h3>
+                    <p className="modal-bio-text">{selectedLawyer.bio}</p>
+
+                    <h3 className="modal-subheader">Notable Successes</h3>
+                    <ul className="modal-list">
+                      {selectedLawyer.successes.map((s, idx) => (
+                        <li key={idx}>{s}</li>
+                      ))}
+                    </ul>
+
+                    <div className="modal-action-row">
+                      <button className="btn btn-primary" onClick={handleModalBook} id="modal-book-btn">Book Consultation</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ═══ CONTACT SECTION ═══ */}
+          <section className="reviews-section" id="reviews" aria-label="Client Testimonials and Google Reviews">
+            <div className="container">
+              <div className="section-header">
+                <h2>Client <span className="serif-title">Trust</span></h2>
+                <p className="section-subtitle">Real experiences from our clients across Hyderabad.</p>
+              </div>
+            </div>
+            <div className="marquee-container">
+              {/* Double the array for seamless infinite scroll */}
+              {[...REVIEWS, ...REVIEWS].map((review, index) => (
+                <div className="review-card" key={index}>
+                  <div className="review-header">
+                    <div className="reviewer-info">
+                      <h4>{review.name}</h4>
+                      <span className="review-time">{review.time}</span>
+                    </div>
+                    <div className="google-logo">
+                      <svg viewBox="0 0 48 48" width="24" height="24">
+                        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+                        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.9c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.13-10.36 7.13-17.65z" />
+                        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+                        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="review-stars">
+                    {[...Array(review.rating)].map((_, i) => <StarIcon key={i} />)}
+                  </div>
+                  <p className="review-text">"{review.text}"</p>
                 </div>
               ))}
             </div>
-          )}
-        </div>
-      </section>
+          </section>
 
-      {/* ═══ TEAM SECTION ═══ */}
-      <section className="team-section" id="team" aria-label="Our legal team">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-tag">Elite Advocacy</span>
-            <h2 className="section-title">Our Legal Minds</h2>
-            <p className="section-subtitle">Choose a domain expert to review their profile and book a confidential consultation.</p>
-          </div>
+          <section className="contact-section" id="contact" aria-label="Contact and consultation booking">
+            <div className="container">
+              <div className="contact-grid">
 
-          <div className="lawyer-grid" role="list">
-            {Object.keys(LAWYER_DATA).map((key) => {
-              const lawyer = LAWYER_DATA[key];
-              return (
-                <article
-                  key={key}
-                  className="lawyer-card"
-                  onClick={() => setActiveModal(key)}
-                  role="listitem"
-                  tabIndex={0}
-                  onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setActiveModal(key)}
-                  aria-label={`${lawyer.name}, ${lawyer.role} — Click to view profile`}
-                  id={`lawyer-card-${key}`}
-                >
-                  <div className="lawyer-img-wrapper">
-                    <div className="lawyer-placeholder-graphic" aria-hidden="true">
-                      {lawyer.icon === 'logo' ? <LogoIcon size={70} /> : <span>{lawyer.icon}</span>}
-                    </div>
-                    <div className="lawyer-badge">{lawyer.tag}</div>
-                  </div>
-                  <div className="lawyer-info">
-                    <h3 className="lawyer-name">{lawyer.name}</h3>
-                    <p className="lawyer-title">{lawyer.role}</p>
-                    <p className="lawyer-quote">{lawyer.quote}</p>
-                    <button className="btn btn-card-details" tabIndex={-1} aria-hidden="true">View Profile &amp; Case History</button>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+                {/* Info Panel */}
+                <div className="contact-info-panel">
+                  <span className="section-tag">Connect</span>
+                  <h2 className="section-title">Initiate Consultation</h2>
+                  <p className="contact-lead-text">
+                    Fill out the secure intake form — your details will be sent directly to our WhatsApp. We respond within 2 business hours.
+                  </p>
 
-      {/* ═══ LAWYER MODAL ═══ */}
-      {selectedLawyer && (
-        <div
-          className="modal-overlay active"
-          role="dialog"
-          aria-modal="true"
-          aria-label={`${selectedLawyer.name} profile`}
-          onClick={(e) => e.target.classList.contains('modal-overlay') && setActiveModal(null)}
-        >
-          <div className="modal-card">
-            <button className="modal-close" onClick={() => setActiveModal(null)} aria-label="Close modal" id="modal-close-btn">✕</button>
-            <div className="modal-content-grid">
-              <div className="modal-side-graphic">
-                <div className="modal-icon" aria-hidden="true">
-                  {selectedLawyer.icon === 'logo' ? <LogoIcon size={80} /> : selectedLawyer.icon}
-                </div>
-                <h2 className="modal-lawyer-name">{selectedLawyer.name}</h2>
-                <p className="modal-lawyer-role">{selectedLawyer.role}</p>
-                <span className="modal-lawyer-tag">{selectedLawyer.tag}</span>
-              </div>
-              <div className="modal-details-body">
-                <h3 className="modal-subheader">Core Philosophy</h3>
-                <p className="modal-bio-quote">{selectedLawyer.quote}</p>
-
-                <h3 className="modal-subheader">Expertise &amp; Experience</h3>
-                <p className="modal-bio-text">{selectedLawyer.bio}</p>
-
-                <h3 className="modal-subheader">Notable Successes</h3>
-                <ul className="modal-list">
-                  {selectedLawyer.successes.map((s, idx) => (
-                    <li key={idx}>{s}</li>
-                  ))}
-                </ul>
-
-                <div className="modal-action-row">
-                  <button className="btn btn-primary" onClick={handleModalBook} id="modal-book-btn">Book Consultation</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ═══ CONTACT SECTION ═══ */}
-      <section className="reviews-section" id="reviews" aria-label="Client Testimonials and Google Reviews">
-        <div className="container">
-          <div className="section-header">
-            <h2>Client <span className="serif-title">Trust</span></h2>
-            <p className="section-subtitle">Real experiences from our clients across Hyderabad.</p>
-          </div>
-        </div>
-        <div className="marquee-container">
-          {/* Double the array for seamless infinite scroll */}
-          {[...REVIEWS, ...REVIEWS].map((review, index) => (
-            <div className="review-card" key={index}>
-              <div className="review-header">
-                <div className="reviewer-info">
-                  <h4>{review.name}</h4>
-                  <span className="review-time">{review.time}</span>
-                </div>
-                <div className="google-logo">
-                  <svg viewBox="0 0 48 48" width="24" height="24">
-                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.9c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.13-10.36 7.13-17.65z"/>
-                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-                  </svg>
-                </div>
-              </div>
-              <div className="review-stars">
-                {[...Array(review.rating)].map((_, i) => <StarIcon key={i} />)}
-              </div>
-              <p className="review-text">"{review.text}"</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="contact-section" id="contact" aria-label="Contact and consultation booking">
-        <div className="container">
-          <div className="contact-grid">
-
-            {/* Info Panel */}
-            <div className="contact-info-panel">
-              <span className="section-tag">Connect</span>
-              <h2 className="section-title">Initiate Consultation</h2>
-              <p className="contact-lead-text">
-                Fill out the secure intake form — your details will be sent directly to our WhatsApp. We respond within 2 business hours.
-              </p>
-
-              <div className="contact-meta-item">
-                <a href="tel:+919493456771" className="meta-link" aria-label="Call D Vijay Kiran at +91 94934 56771" id="phone-link-1">
-                  <div className="meta-icon" aria-hidden="true">✆</div>
-                  <div className="meta-details">
-                    <h3>Direct Call</h3>
-                    <p>+91 94934 56771</p>
-                  </div>
-                </a>
-              </div>
-
-              <div className="contact-meta-item">
-                <a href="tel:+919618013964" className="meta-link" aria-label="Call alternate line at +91 96180 13964" id="phone-link-2">
-                  <div className="meta-icon" aria-hidden="true">📞</div>
-                  <div className="meta-details">
-                    <h3>Alternate Line</h3>
-                    <p>+91 96180 13964</p>
-                  </div>
-                </a>
-              </div>
-
-              <div className="contact-meta-item">
-                <a
-                  href={`https://wa.me/${WHATSAPP_NUMBER}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="meta-link"
-                  aria-label="Chat on WhatsApp"
-                  id="whatsapp-direct-link"
-                >
-                  <div className="meta-icon" aria-hidden="true" style={{ fontSize: '1.4rem' }}>💬</div>
-                  <div className="meta-details">
-                    <h3>WhatsApp</h3>
-                    <p>+91 76000 79980</p>
-                  </div>
-                </a>
-              </div>
-
-              <div className="contact-meta-item">
-                <a
-                  href="https://www.google.com/maps/search/?api=1&query=Near+Bharani+Apartment+Kondapur+Hyderabad+Telangana+500084"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="meta-link"
-                  aria-label="View office location on Google Maps"
-                  id="maps-link"
-                >
-                  <div className="meta-icon" aria-hidden="true">📍</div>
-                  <div className="meta-details">
-                    <h3>Office Location</h3>
-                    <address style={{ fontStyle: 'normal', fontSize: '0.9rem', lineHeight: '1.5' }}>
-                      Near Bharani Apartment, 62–63,<br />
-                      near Tata Zudio, Kondapur,<br />
-                      Kothaguda, Hyderabad — 500084
-                    </address>
-                  </div>
-                </a>
-              </div>
-            </div>
-
-            {/* Form Panel */}
-            <div className="contact-form-panel">
-              {!isSuccess ? (
-                <div className="form-wrapper">
-                  <form onSubmit={handleFormSubmit} noValidate aria-label="Consultation intake form">
-                    <div className="form-row">
-                      <div className="form-group">
-                        <label htmlFor="client-name">Full Name <span aria-hidden="true">*</span></label>
-                        <input
-                          type="text"
-                          id="client-name"
-                          name="name"
-                          value={formState.name}
-                          onChange={handleInputChange}
-                          className={formErrors.name ? 'invalid' : ''}
-                          placeholder="Your full name"
-                          autoComplete="name"
-                          required
-                          aria-required="true"
-                          aria-invalid={formErrors.name}
-                        />
-                        {formErrors.name && <span className="error-msg" role="alert" style={{ display: 'block' }}>Name is required</span>}
+                  <div className="contact-meta-item">
+                    <a href="tel:+919493456771" className="meta-link" aria-label="Call D Vijay Kiran at +91 94934 56771" id="phone-link-1">
+                      <div className="meta-icon" aria-hidden="true">✆</div>
+                      <div className="meta-details">
+                        <h3>Direct Call</h3>
+                        <p>+91 94934 56771</p>
                       </div>
-                    </div>
+                    </a>
+                  </div>
 
-                    <div className="form-row two-col">
-                      <div className="form-group">
-                        <label htmlFor="client-email">Email Address <span aria-hidden="true">*</span></label>
-                        <input
-                          type="email"
-                          id="client-email"
-                          name="email"
-                          value={formState.email}
-                          onChange={handleInputChange}
-                          className={formErrors.email ? 'invalid' : ''}
-                          placeholder="john@example.com"
-                          autoComplete="email"
-                          required
-                          aria-required="true"
-                          aria-invalid={formErrors.email}
-                        />
-                        {formErrors.email && <span className="error-msg" role="alert" style={{ display: 'block' }}>Valid email required</span>}
+                  <div className="contact-meta-item">
+                    <a href="tel:+919618013964" className="meta-link" aria-label="Call alternate line at +91 96180 13964" id="phone-link-2">
+                      <div className="meta-icon" aria-hidden="true">📞</div>
+                      <div className="meta-details">
+                        <h3>Alternate Line</h3>
+                        <p>+91 96180 13964</p>
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="client-phone">Phone Number</label>
-                        <input
-                          type="tel"
-                          id="client-phone"
-                          name="phone"
-                          value={formState.phone}
-                          onChange={handleInputChange}
-                          placeholder="+91 98765 43210"
-                          autoComplete="tel"
-                          aria-label="Your phone number (optional)"
-                        />
-                      </div>
-                    </div>
+                    </a>
+                  </div>
 
-                    <div className="form-row">
-                      <div className="form-group">
-                        <label htmlFor="legal-domain">Practice Area <span aria-hidden="true">*</span></label>
-                        <select
-                          id="legal-domain"
-                          name="domain"
-                          value={formState.domain}
-                          onChange={handleInputChange}
-                          className={formErrors.domain ? 'invalid' : ''}
-                          required
-                          aria-required="true"
-                          aria-invalid={formErrors.domain}
-                        >
-                          <option value="" disabled>Select a practice area...</option>
-                          <option value="advocate">General Advocacy & Document Verification (D Vijay Kiran)</option>
-                          <option value="criminal">Criminal Law (D Sai Kumar)</option>
-                          <option value="corporate">Financial & Loan Settlements (Bhavana)</option>
-                          <option value="family">Criminal, Civil & Mutual Divorce (Narasimha)</option>
-                        </select>
-                        {formErrors.domain && <span className="error-msg" role="alert" style={{ display: 'block' }}>Please select a domain</span>}
-                      </div>
-                    </div>
-
-                    <div className="form-row">
-                      <div className="form-group">
-                        <label htmlFor="client-message">Brief Case Outline <span className="optional-tag">(Confidential)</span></label>
-                        <textarea
-                          id="client-message"
-                          name="message"
-                          value={formState.message}
-                          onChange={handleInputChange}
-                          rows="4"
-                          placeholder="Briefly describe your legal matter..."
-                          aria-label="Optional brief description of your case"
-                        ></textarea>
-                      </div>
-                    </div>
-
-                    {serverError && (
-                      <div className="form-server-error" role="alert">
-                        ⚠️ {serverError}
-                      </div>
-                    )}
-                    <button
-                      type="submit"
-                      className={`btn btn-primary btn-block ${isSubmitting ? 'submitting' : ''}`}
-                      disabled={isSubmitting}
-                      id="submit-consultation-btn"
+                  <div className="contact-meta-item">
+                    <a
+                      href={`https://wa.me/${WHATSAPP_NUMBER}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="meta-link"
+                      aria-label="Chat on WhatsApp"
+                      id="whatsapp-direct-link"
                     >
-                      {isSubmitting ? (
-                        <span className="spinner-text">
-                          <span className="btn-spinner" aria-hidden="true"></span>
-                          Submitting Consultation...
-                        </span>
-                      ) : (
-                        <span>📤 Submit Request</span>
-                      )}
-                    </button>
-                    <p className="form-note" aria-live="polite">
-                      Your details will be emailed directly to our team at <strong>amey9909@gmail.com</strong>.
-                    </p>
-                  </form>
-                </div>
-              ) : (
-                <div className="form-success-state active" role="status" aria-live="assertive">
-                  <div className="success-icon-wrapper">
-                    <svg className="success-checkmark" viewBox="0 0 52 52" aria-hidden="true">
-                      <circle className="success-checkmark-circle" cx="26" cy="26" r="25" fill="none" />
-                      <path className="success-checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
-                    </svg>
+                      <div className="meta-icon" aria-hidden="true" style={{ fontSize: '1.4rem' }}>💬</div>
+                      <div className="meta-details">
+                        <h3>WhatsApp</h3>
+                        <p>+91 76000 79980</p>
+                      </div>
+                    </a>
                   </div>
-                  {!whatsappFallbackUrl ? (
-                    <>
-                      <h3 className="success-title">Consultation Sent! ✅</h3>
-                      <p className="success-text">
-                        Your request has been successfully emailed to our legal team.<br />
-                        We will review your case outline and reply to you shortly.
-                      </p>
-                    </>
+
+                  <div className="contact-meta-item">
+                    <a
+                      href="https://www.google.com/maps/search/?api=1&query=Near+Bharani+Apartment+Kondapur+Hyderabad+Telangana+500084"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="meta-link"
+                      aria-label="View office location on Google Maps"
+                      id="maps-link"
+                    >
+                      <div className="meta-icon" aria-hidden="true">📍</div>
+                      <div className="meta-details">
+                        <h3>Office Location</h3>
+                        <address style={{ fontStyle: 'normal', fontSize: '0.9rem', lineHeight: '1.5' }}>
+                          Near Bharani Apartment, 62–63,<br />
+                          near Tata Zudio, Kondapur,<br />
+                          Kothaguda, Hyderabad — 500084
+                        </address>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+
+                {/* Form Panel */}
+                <div className="contact-form-panel">
+                  {!isSuccess ? (
+                    <div className="form-wrapper">
+                      <form onSubmit={handleFormSubmit} noValidate aria-label="Consultation intake form">
+                        <div className="form-row">
+                          <div className="form-group">
+                            <label htmlFor="client-name">Full Name <span aria-hidden="true">*</span></label>
+                            <input
+                              type="text"
+                              id="client-name"
+                              name="name"
+                              value={formState.name}
+                              onChange={handleInputChange}
+                              className={formErrors.name ? 'invalid' : ''}
+                              placeholder="Your full name"
+                              autoComplete="name"
+                              required
+                              aria-required="true"
+                              aria-invalid={formErrors.name}
+                            />
+                            {formErrors.name && <span className="error-msg" role="alert" style={{ display: 'block' }}>Name is required</span>}
+                          </div>
+                        </div>
+
+                        <div className="form-row two-col">
+                          <div className="form-group">
+                            <label htmlFor="client-email">Email Address <span aria-hidden="true">*</span></label>
+                            <input
+                              type="email"
+                              id="client-email"
+                              name="email"
+                              value={formState.email}
+                              onChange={handleInputChange}
+                              className={formErrors.email ? 'invalid' : ''}
+                              placeholder="john@example.com"
+                              autoComplete="email"
+                              required
+                              aria-required="true"
+                              aria-invalid={formErrors.email}
+                            />
+                            {formErrors.email && <span className="error-msg" role="alert" style={{ display: 'block' }}>Valid email required</span>}
+                          </div>
+                          <div className="form-group">
+                            <label htmlFor="client-phone">Phone Number</label>
+                            <input
+                              type="tel"
+                              id="client-phone"
+                              name="phone"
+                              value={formState.phone}
+                              onChange={handleInputChange}
+                              placeholder="+91 98765 43210"
+                              autoComplete="tel"
+                              aria-label="Your phone number (optional)"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="form-row">
+                          <div className="form-group">
+                            <label htmlFor="legal-domain">Practice Area <span aria-hidden="true">*</span></label>
+                            <select
+                              id="legal-domain"
+                              name="domain"
+                              value={formState.domain}
+                              onChange={handleInputChange}
+                              className={formErrors.domain ? 'invalid' : ''}
+                              required
+                              aria-required="true"
+                              aria-invalid={formErrors.domain}
+                            >
+                              <option value="" disabled>Select a practice area...</option>
+                              <option value="advocate">General Advocacy & Document Verification (D Vijay Kiran)</option>
+                              <option value="criminal">Criminal Law (D Sai Kumar)</option>
+                              <option value="corporate">Financial & Loan Settlements (Bhavana)</option>
+                              <option value="family">Criminal, Civil & Mutual Divorce (Narasimha)</option>
+                            </select>
+                            {formErrors.domain && <span className="error-msg" role="alert" style={{ display: 'block' }}>Please select a domain</span>}
+                          </div>
+                        </div>
+
+                        <div className="form-row">
+                          <div className="form-group">
+                            <label htmlFor="client-message">Brief Case Outline <span className="optional-tag">(Confidential)</span></label>
+                            <textarea
+                              id="client-message"
+                              name="message"
+                              value={formState.message}
+                              onChange={handleInputChange}
+                              rows="4"
+                              placeholder="Briefly describe your legal matter..."
+                              aria-label="Optional brief description of your case"
+                            ></textarea>
+                          </div>
+                        </div>
+
+                        {serverError && (
+                          <div className="form-server-error" role="alert">
+                            ⚠️ {serverError}
+                          </div>
+                        )}
+                        <button
+                          type="submit"
+                          className={`btn btn-primary btn-block ${isSubmitting ? 'submitting' : ''}`}
+                          disabled={isSubmitting}
+                          id="submit-consultation-btn"
+                        >
+                          {isSubmitting ? (
+                            <span className="spinner-text">
+                              <span className="btn-spinner" aria-hidden="true"></span>
+                              Submitting Consultation...
+                            </span>
+                          ) : (
+                            <span>📤 Submit Request</span>
+                          )}
+                        </button>
+                        <p className="form-note" aria-live="polite">
+                          Your details will be emailed directly to our team at <strong>amey9909@gmail.com</strong>.
+                        </p>
+                      </form>
+                    </div>
                   ) : (
-                    <>
-                      <h3 className="success-title">Consultation Saved</h3>
-                      <p className="success-text">
-                        Your request was saved. Note: To complete auto-email delivery, please configure the <code>EMAIL_USER</code> and <code>EMAIL_PASS</code> in the server <code>.env</code>.
+                    <div className="form-success-state active" role="status" aria-live="assertive">
+                      <div className="success-icon-wrapper">
+                        <svg className="success-checkmark" viewBox="0 0 52 52" aria-hidden="true">
+                          <circle className="success-checkmark-circle" cx="26" cy="26" r="25" fill="none" />
+                          <path className="success-checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                        </svg>
+                      </div>
+                      {!whatsappFallbackUrl ? (
+                        <>
+                          <h3 className="success-title">Consultation Sent! ✅</h3>
+                          <p className="success-text">
+                            Your request has been successfully emailed to our legal team.<br />
+                            We will review your case outline and reply to you shortly.
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          <h3 className="success-title">Consultation Saved</h3>
+                          <p className="success-text">
+                            Your request was saved. Note: To complete auto-email delivery, please configure the <code>EMAIL_USER</code> and <code>EMAIL_PASS</code> in the server <code>.env</code>.
+                          </p>
+                          <p className="success-text" style={{ fontWeight: '500' }}>
+                            In the meantime, you can send us the details directly on WhatsApp:
+                          </p>
+                          <a
+                            href={whatsappFallbackUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn btn-whatsapp"
+                            style={{ marginBottom: '16px', display: 'inline-flex', gap: '8px', alignItems: 'center' }}
+                          >
+                            💬 Send details via WhatsApp
+                          </a>
+                        </>
+                      )}
+                      <p className="success-reference">
+                        Confirmation Code: <strong>{confirmationCode}</strong>
                       </p>
-                      <p className="success-text" style={{ fontWeight: '500' }}>
-                        In the meantime, you can send us the details directly on WhatsApp:
-                      </p>
-                      <a
-                        href={whatsappFallbackUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn btn-whatsapp"
-                        style={{ marginBottom: '16px', display: 'inline-flex', gap: '8px', alignItems: 'center' }}
-                      >
-                        💬 Send details via WhatsApp
-                      </a>
-                    </>
+                      <button className="btn btn-secondary" onClick={resetForm} id="submit-another-btn">Submit Another Request</button>
+                    </div>
                   )}
-                  <p className="success-reference">
-                    Confirmation Code: <strong>{confirmationCode}</strong>
-                  </p>
-                  <button className="btn btn-secondary" onClick={resetForm} id="submit-another-btn">Submit Another Request</button>
                 </div>
-              )}
+
+              </div>
             </div>
+          </section>
 
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ CAREERS / FIRST GEN LAWYERS SECTION ═══ */}
-      <section className="first-gen-section" id="careers" aria-label="First Generation Lawyers Connect">
-        <div className="container">
-          <div className="first-gen-grid">
-            <div className="first-gen-info">
-              <span className="section-subtitle">Join The Team</span>
-              <h2><span className="serif-title">First-Gen</span><br/>Lawyers Connect</h2>
-              <p className="first-gen-desc">
-                Are you a first-generation lawyer looking for mentorship, guidance, or an opportunity to work with us? We believe in nurturing raw talent and providing a platform for the next generation of legal minds.
-              </p>
-              <div className="first-gen-perks">
-                <div className="perk-item">
-                  <div className="perk-icon">🎓</div>
-                  <div className="perk-text">
-                    <h4>Mentorship</h4>
-                    <p>Learn directly from seasoned trial advocates.</p>
+          {/* ═══ CAREERS / FIRST GEN LAWYERS SECTION ═══ */}
+          <section className="first-gen-section" id="careers" aria-label="First Generation Lawyers Connect">
+            <div className="container">
+              <div className="first-gen-grid">
+                <div className="first-gen-info">
+                  <span className="section-subtitle">Join The Team</span>
+                  <h2><span className="serif-title">First-Gen</span><br />Lawyers Connect</h2>
+                  <p className="first-gen-desc">
+                    Are you a first-generation lawyer looking for mentorship, guidance, or an opportunity to work with us? We believe in nurturing raw talent and providing a platform for the next generation of legal minds.
+                  </p>
+                  <div className="first-gen-perks">
+                    <div className="perk-item">
+                      <div className="perk-icon">🎓</div>
+                      <div className="perk-text">
+                        <h4>Mentorship</h4>
+                        <p>Learn directly from seasoned trial advocates.</p>
+                      </div>
+                    </div>
+                    <div className="perk-item">
+                      <div className="perk-icon">💼</div>
+                      <div className="perk-text">
+                        <h4>High-Stakes Exposure</h4>
+                        <p>Work on complex constitutional and corporate matters.</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="perk-item">
-                  <div className="perk-icon">💼</div>
-                  <div className="perk-text">
-                    <h4>High-Stakes Exposure</h4>
-                    <p>Work on complex constitutional and corporate matters.</p>
-                  </div>
+
+                <div className="first-gen-form-container">
+                  {!isCareerSuccess ? (
+                    <div className="form-card">
+                      <h3>Start Your Journey</h3>
+                      <form onSubmit={handleCareerSubmit} noValidate className="modern-form">
+                        <div className="form-group floating">
+                          <input
+                            type="text"
+                            id="career-name"
+                            name="name"
+                            value={careerFormState.name}
+                            onChange={handleCareerInputChange}
+                            className={careerFormErrors.name ? 'error' : ''}
+                            placeholder=" "
+                            aria-required="true"
+                          />
+                          <label htmlFor="career-name">Full Name *</label>
+                          {careerFormErrors.name && <span className="error-msg">Name is required</span>}
+                        </div>
+
+                        <div className="form-group floating">
+                          <input
+                            type="email"
+                            id="career-email"
+                            name="email"
+                            value={careerFormState.email}
+                            onChange={handleCareerInputChange}
+                            className={careerFormErrors.email ? 'error' : ''}
+                            placeholder=" "
+                            aria-required="true"
+                          />
+                          <label htmlFor="career-email">Email Address *</label>
+                          {careerFormErrors.email && <span className="error-msg">Valid email is required</span>}
+                        </div>
+
+                        <div className="form-row split">
+                          <div className="form-group floating">
+                            <input
+                              type="tel"
+                              id="career-phone"
+                              name="phone"
+                              value={careerFormState.phone}
+                              onChange={handleCareerInputChange}
+                              placeholder=" "
+                            />
+                            <label htmlFor="career-phone">Phone (Optional)</label>
+                          </div>
+                          <div className="form-group">
+                            <select
+                              id="career-interest"
+                              name="interest"
+                              value={careerFormState.interest}
+                              onChange={handleCareerInputChange}
+                              className={`modern-select ${careerFormErrors.interest ? 'error' : ''}`}
+                              aria-required="true"
+                            >
+                              <option value="" disabled>Select Area of Interest *</option>
+                              <option value="Litigation">Litigation & Trial</option>
+                              <option value="Corporate">Corporate & Financial</option>
+                              <option value="Research">Legal Research & Drafting</option>
+                              <option value="Internship">Internship / Observation</option>
+                            </select>
+                            {careerFormErrors.interest && <span className="error-msg">Please select an area</span>}
+                          </div>
+                        </div>
+
+                        <div className="form-group floating">
+                          <textarea
+                            id="career-message"
+                            name="message"
+                            value={careerFormState.message}
+                            onChange={handleCareerInputChange}
+                            rows="3"
+                            placeholder=" "
+                          ></textarea>
+                          <label htmlFor="career-message">Your Background / Why connect?</label>
+                        </div>
+
+                        {careerServerError && (
+                          <div className="form-server-error" role="alert">
+                            ⚠️ {careerServerError}
+                          </div>
+                        )}
+                        <button
+                          type="submit"
+                          className={`btn btn-primary btn-block ${isCareerSubmitting ? 'submitting' : ''}`}
+                          disabled={isCareerSubmitting}
+                        >
+                          {isCareerSubmitting ? (
+                            <span className="spinner-text">
+                              <span className="btn-spinner" aria-hidden="true"></span>
+                              Submitting...
+                            </span>
+                          ) : (
+                            <span>🎓 Apply to Connect</span>
+                          )}
+                        </button>
+                        <p className="form-note text-center">
+                          Your details will be emailed directly to our team.
+                        </p>
+                      </form>
+                    </div>
+                  ) : (
+                    <div className="form-success-state active">
+                      <div className="success-icon-wrapper">
+                        <svg className="success-checkmark" viewBox="0 0 52 52">
+                          <circle className="success-checkmark-circle" cx="26" cy="26" r="25" fill="none" />
+                          <path className="success-checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                        </svg>
+                      </div>
+                      <h3 className="success-title">Application Sent!</h3>
+                      <p className="success-text">
+                        We've received your request and will review your profile shortly. Keep an eye on your inbox!
+                      </p>
+                      <button className="btn btn-secondary" onClick={resetCareerForm}>Submit Another</button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
-
-            <div className="first-gen-form-container">
-              {!isCareerSuccess ? (
-                <div className="form-card">
-                  <h3>Start Your Journey</h3>
-                  <form onSubmit={handleCareerSubmit} noValidate className="modern-form">
-                    <div className="form-group floating">
-                      <input
-                        type="text"
-                        id="career-name"
-                        name="name"
-                        value={careerFormState.name}
-                        onChange={handleCareerInputChange}
-                        className={careerFormErrors.name ? 'error' : ''}
-                        placeholder=" "
-                        aria-required="true"
-                      />
-                      <label htmlFor="career-name">Full Name *</label>
-                      {careerFormErrors.name && <span className="error-msg">Name is required</span>}
-                    </div>
-
-                    <div className="form-group floating">
-                      <input
-                        type="email"
-                        id="career-email"
-                        name="email"
-                        value={careerFormState.email}
-                        onChange={handleCareerInputChange}
-                        className={careerFormErrors.email ? 'error' : ''}
-                        placeholder=" "
-                        aria-required="true"
-                      />
-                      <label htmlFor="career-email">Email Address *</label>
-                      {careerFormErrors.email && <span className="error-msg">Valid email is required</span>}
-                    </div>
-
-                    <div className="form-row split">
-                      <div className="form-group floating">
-                        <input
-                          type="tel"
-                          id="career-phone"
-                          name="phone"
-                          value={careerFormState.phone}
-                          onChange={handleCareerInputChange}
-                          placeholder=" "
-                        />
-                        <label htmlFor="career-phone">Phone (Optional)</label>
-                      </div>
-                      <div className="form-group">
-                        <select
-                          id="career-interest"
-                          name="interest"
-                          value={careerFormState.interest}
-                          onChange={handleCareerInputChange}
-                          className={`modern-select ${careerFormErrors.interest ? 'error' : ''}`}
-                          aria-required="true"
-                        >
-                          <option value="" disabled>Select Area of Interest *</option>
-                          <option value="Litigation">Litigation & Trial</option>
-                          <option value="Corporate">Corporate & Financial</option>
-                          <option value="Research">Legal Research & Drafting</option>
-                          <option value="Internship">Internship / Observation</option>
-                        </select>
-                        {careerFormErrors.interest && <span className="error-msg">Please select an area</span>}
-                      </div>
-                    </div>
-
-                    <div className="form-group floating">
-                      <textarea
-                        id="career-message"
-                        name="message"
-                        value={careerFormState.message}
-                        onChange={handleCareerInputChange}
-                        rows="3"
-                        placeholder=" "
-                      ></textarea>
-                      <label htmlFor="career-message">Your Background / Why connect?</label>
-                    </div>
-
-                    {careerServerError && (
-                      <div className="form-server-error" role="alert">
-                        ⚠️ {careerServerError}
-                      </div>
-                    )}
-                    <button
-                      type="submit"
-                      className={`btn btn-primary btn-block ${isCareerSubmitting ? 'submitting' : ''}`}
-                      disabled={isCareerSubmitting}
-                    >
-                      {isCareerSubmitting ? (
-                        <span className="spinner-text">
-                          <span className="btn-spinner" aria-hidden="true"></span>
-                          Submitting...
-                        </span>
-                      ) : (
-                        <span>🎓 Apply to Connect</span>
-                      )}
-                    </button>
-                    <p className="form-note text-center">
-                      Your details will be emailed directly to our team.
-                    </p>
-                  </form>
-                </div>
-              ) : (
-                <div className="form-success-state active">
-                  <div className="success-icon-wrapper">
-                    <svg className="success-checkmark" viewBox="0 0 52 52">
-                      <circle className="success-checkmark-circle" cx="26" cy="26" r="25" fill="none" />
-                      <path className="success-checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
-                    </svg>
-                  </div>
-                  <h3 className="success-title">Application Sent!</h3>
-                  <p className="success-text">
-                    We've received your request and will review your profile shortly. Keep an eye on your inbox!
-                  </p>
-                  <button className="btn btn-secondary" onClick={resetCareerForm}>Submit Another</button>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
+          </section>
         </>
       )}
 
