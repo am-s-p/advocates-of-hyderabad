@@ -204,8 +204,34 @@ const AdminPortal = ({ token, setToken, onExit, fetchPublicPosts }) => {
     const file = e.target.files[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onloadend = () => {
-      setPostForm(prev => ({ ...prev, image: reader.result }));
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const MAX_WIDTH = 1200;
+        const MAX_HEIGHT = 1200;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+          }
+        }
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+        setPostForm(prev => ({ ...prev, image: dataUrl }));
+      };
+      img.src = event.target.result;
     };
     reader.readAsDataURL(file);
   };
@@ -599,6 +625,7 @@ export default function App() {
   return (
     <>
       {/* ═══ NAVIGATION ═══ */}
+      {currentView !== 'admin' && (
       <nav className={`nav-bar ${isScrolled ? 'scrolled' : ''}`} id="navbar" role="navigation" aria-label="Main navigation">
         <div className="nav-container">
           <a href="#" className="nav-logo" aria-label="Advocates of Hyderabad – Home" onClick={(e) => { e.preventDefault(); setCurrentView('home'); window.scrollTo(0, 0); }}>
@@ -658,9 +685,9 @@ export default function App() {
           <div className="mobile-nav-contact">
             <a href="tel:+919493456771">📞 +91 94934 56771</a>
             <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">💬 WhatsApp Us</a>
-          </div>
         </div>
       </nav>
+      )}
 
       {currentView === 'home' && (
         <>
