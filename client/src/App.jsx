@@ -386,6 +386,26 @@ export default function App() {
   const [adminToken, setAdminToken] = useState(localStorage.getItem('adminToken') || null);
   const [posts, setPosts] = useState([]);
 
+  // Language State
+  const getInitialLanguage = () => {
+    const match = document.cookie.match(/googtrans=\/en\/([a-z]{2})/);
+    return match ? match[1] : 'en';
+  };
+  const [currentLang, setCurrentLang] = useState(getInitialLanguage());
+
+  const handleLanguageChange = (e) => {
+    const lang = e.target.value;
+    setCurrentLang(lang);
+    if (lang === 'en') {
+      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=.${window.location.hostname}; path=/;`;
+    } else {
+      document.cookie = `googtrans=/en/${lang}; path=/;`;
+      document.cookie = `googtrans=/en/${lang}; domain=.${window.location.hostname}; path=/;`;
+    }
+    window.location.reload();
+  };
+
   const [formState, setFormState] = useState({ name: '', email: '', phone: '', domain: '', message: '' });
   const [formErrors, setFormErrors] = useState({ name: false, email: false, domain: false });
   const [isSuccess, setIsSuccess] = useState(false);
@@ -645,6 +665,26 @@ export default function App() {
             </ul>
 
             <div className="nav-right">
+              <select 
+                value={currentLang} 
+                onChange={handleLanguageChange}
+                style={{
+                  background: 'transparent',
+                  color: 'var(--text-color)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '6px',
+                  padding: '4px 8px',
+                  fontSize: '0.9rem',
+                  cursor: 'pointer',
+                  marginRight: '0.5rem',
+                  outline: 'none'
+                }}
+                aria-label="Select Language"
+              >
+                <option value="en">Eng</option>
+                <option value="hi">हिन्दी</option>
+                <option value="te">తెలుగు</option>
+              </select>
               <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle light/dark theme" id="theme-toggle-btn">
                 <svg className="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <circle cx="12" cy="12" r="10"></circle>

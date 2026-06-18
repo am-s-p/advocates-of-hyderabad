@@ -1911,3 +1911,17 @@ section {
     gap: 0;
   }
 }
+
+/* Google Translate Overrides to hide default banner and frame */
+body {
+  top: 0 !important;
+}
+.skiptranslate iframe {
+  display: none !important;
+}
+.VIpgJd-ZVi9od-ORHb-OEVmcd {
+  display: none !important;
+}
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
