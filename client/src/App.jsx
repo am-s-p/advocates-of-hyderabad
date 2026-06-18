@@ -183,7 +183,6 @@ const AdminPortal = ({ token, setToken, onExit, fetchPublicPosts }) => {
       const data = await res.json();
       if (data.success && data.token) {
         setToken(data.token);
-        localStorage.setItem('adminToken', data.token);
       } else {
         setLoginError(data.error || 'Login failed');
       }
@@ -196,7 +195,6 @@ const AdminPortal = ({ token, setToken, onExit, fetchPublicPosts }) => {
 
   const handleLogout = () => {
     setToken(null);
-    localStorage.removeItem('adminToken');
     setPostForm({ id: null, title: '', content: '', image: '' });
   };
 
@@ -381,9 +379,8 @@ export default function App() {
   const [activeModal, setActiveModal] = useState(null);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
-  // App View & Auth State
   const [currentView, setCurrentView] = useState('home'); // 'home' | 'admin'
-  const [adminToken, setAdminToken] = useState(localStorage.getItem('adminToken') || null);
+  const [adminToken, setAdminToken] = useState(null);
   const [posts, setPosts] = useState([]);
 
   // Language State
