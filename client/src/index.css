@@ -1304,9 +1304,24 @@ section {
 
 .footer-bottom {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  font-size: 0.9rem;
   color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+}
+
+.footer-bottom p {
   font-size: 0.8rem;
   flex-wrap: wrap;
   gap: 8px;
