@@ -1410,6 +1410,18 @@ export default function App() {
               </ul>
             </div>
           </div>
+          
+          <style>
+            @media (max-width: 768px) {
+              .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+              }
+              .footer-brand {
+                grid-column: 1 / -1;
+              }
+            }
+          </style>
           <hr className="footer-divider" />
           <div className="footer-bottom">
             <p>© 2026 Advocates of Hyderabad. All rights reserved. Attorney Advertising.</p>

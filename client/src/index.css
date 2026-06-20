@@ -237,6 +237,12 @@ body {
   font-family: var(--font-sans);
 }
 
+@media (max-width: 480px) {
+  .logo-text {
+    display: none;
+  }
+}
+
 /* Logo SVG Styling */
 .logo-svg {
   flex-shrink: 0;
@@ -387,7 +393,7 @@ body {
 }
 
 .hero-title {
-  font-size: 4rem;
+  font-size: clamp(2.5rem, 8vw, 4rem);
   font-weight: 300;
   line-height: 1.15;
   margin-bottom: 24px;
