@@ -684,12 +684,11 @@ export default function App() {
               </select>
               <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle light/dark theme" id="theme-toggle-btn">
                 <svg className="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <path d="M12 2v20"></path>
+                  <circle cx="12" cy="12" r="5"></circle>
+                  <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
                 </svg>
                 <svg className="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <path d="M2 12h20"></path>
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                 </svg>
               </button>
               <button className="nav-link" onClick={() => setCurrentView('admin')} style={{ background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '0.9rem', fontWeight: '500', color: 'var(--text-secondary)' }}>Team Login</button>
@@ -744,24 +743,6 @@ export default function App() {
               <div className="hero-actions">
                 <a href="#team" className="btn btn-primary" id="meet-counsel-btn" onClick={(e) => handleNavClick(e, '#team')}>Meet Our Counsel</a>
                 <a href="#contact" className="btn btn-secondary" id="case-review-btn" onClick={(e) => handleNavClick(e, '#contact')}>Request Case Review</a>
-              </div>
-
-              {/* Trust Badges */}
-              <div className="hero-trust-row" aria-label="Trust signals">
-                <div className="trust-badge">
-                  <span className="trust-num">9+</span>
-                  <span className="trust-label">Years Experience</span>
-                </div>
-                <div className="trust-divider" aria-hidden="true"></div>
-                <div className="trust-badge">
-                  <span className="trust-num">200+</span>
-                  <span className="trust-label">Cases Won</span>
-                </div>
-                <div className="trust-divider" aria-hidden="true"></div>
-                <div className="trust-badge">
-                  <span className="trust-num">4</span>
-                  <span className="trust-label">Legal Domains</span>
-                </div>
               </div>
 
               <div className="scroll-indicator" aria-hidden="true">
