@@ -1101,8 +1101,7 @@ export default function App() {
               </div>
             </div>
           </section>
-        </>
-{/* ═══ CONTACT SECTION ═══ */}
+          {/* ═══ CONTACT SECTION ═══ */}
           <section className="contact-section" id="contact" aria-label="Contact and consultation booking">
             <div className="container">
               <div className="contact-grid">
@@ -1342,8 +1341,8 @@ export default function App() {
               </div>
             </div>
           </section>
-
-                )}
+        </>
+      )}
 
       {currentView === 'admin' && (
         <AdminPortal token={adminToken} setToken={setAdminToken} onExit={() => setCurrentView('home')} fetchPublicPosts={fetchPosts} />
