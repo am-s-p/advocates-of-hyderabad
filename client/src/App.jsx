@@ -1290,7 +1290,7 @@ export default function App() {
                           )}
                         </button>
                         <p className="form-note" aria-live="polite">
-                          Your details will be emailed directly to our team at <strong>amey9909@gmail.com</strong>.
+                          Your details will be emailed directly to our team at <strong>advocatesofhyderabad@gmail.com</strong>.
                         </p>
                       </form>
                     </div>

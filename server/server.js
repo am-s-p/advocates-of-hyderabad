@@ -71,7 +71,7 @@ const transporter = nodemailer.createTransport({
 });
 
 async function sendEmailNotification({ name, email, phone, domainLabel, message, type = 'consultation' }) {
-  const recipient = process.env.EMAIL_TO || 'amey9909@gmail.com';
+  const recipient = process.env.EMAIL_TO || 'advocatesofhyderabad@gmail.com';
 
   if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
     console.warn('⚠️  Nodemailer not configured (EMAIL_USER or EMAIL_PASS missing).');
@@ -213,7 +213,7 @@ app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
     emailConfigured: !!(process.env.EMAIL_USER && process.env.EMAIL_PASS),
-    emailRecipient: process.env.EMAIL_TO || 'amey9909@gmail.com'
+    emailRecipient: process.env.EMAIL_TO || 'advocatesofhyderabad@gmail.com'
   });
 });
 
