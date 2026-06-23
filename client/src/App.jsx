@@ -653,10 +653,10 @@ export default function App() {
             {/* Desktop Nav */}
             <ul className="nav-links" role="list">
               <li><a href="#about" className="nav-link" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#about'); }}>About</a></li>
-              <li><a href="#quotes" className="nav-link" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#quotes'); }}>Philosophy</a></li>
-              <li><a href="#posts" className="nav-link" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#posts'); }}>Posts</a></li>
               <li><a href="#team" className="nav-link" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#team'); }}>Counsel</a></li>
               <li><a href="#reviews" className="nav-link" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#reviews'); }}>Reviews</a></li>
+              <li><a href="#quotes" className="nav-link" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#quotes'); }}>Philosophy</a></li>
+              <li><a href="#posts" className="nav-link" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#posts'); }}>Posts</a></li>
               <li><a href="#careers" className="nav-link" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#careers'); }}>Connect</a></li>
               <li><a href="#contact" className="nav-link button-outline" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#contact'); }}>Consultation</a></li>
             </ul>
@@ -710,10 +710,10 @@ export default function App() {
           <div className={`mobile-nav ${mobileNavOpen ? 'open' : ''}`} aria-hidden={!mobileNavOpen}>
             <ul role="list">
               <li><a href="#about" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#about'); }}>About</a></li>
-              <li><a href="#quotes" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#quotes'); }}>Philosophy</a></li>
-              <li><a href="#posts" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#posts'); }}>Posts</a></li>
               <li><a href="#team" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#team'); }}>Counsel</a></li>
               <li><a href="#reviews" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#reviews'); }}>Reviews</a></li>
+              <li><a href="#quotes" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#quotes'); }}>Philosophy</a></li>
+              <li><a href="#posts" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#posts'); }}>Posts</a></li>
               <li><a href="#careers" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#careers'); }}>Connect</a></li>
               <li><a href="#contact" className="mobile-cta" onClick={(e) => { if (currentView !== 'home') setCurrentView('home'); handleNavClick(e, '#contact'); }}>Book Consultation</a></li>
               <li><button onClick={() => { setCurrentView('admin'); setMobileNavOpen(false); }} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--accent-color)', fontSize: '1rem', marginTop: '16px', fontWeight: 'bold' }}>Team Login</button></li>
@@ -751,84 +751,6 @@ export default function App() {
                   <div className="scroll-wheel"></div>
                 </div>
               </div>
-            </div>
-          </section>
-
-          {/* ═══ QUOTES SECTION ═══ */}
-          <section className="quotes-section" id="quotes" aria-label="Legal philosophy quotes">
-            <div className="container">
-              <div className="section-header">
-                <span className="section-tag">Philosophy</span>
-                <h2 className="section-title">Guided by Truth</h2>
-              </div>
-
-              <div className="quote-slider-container" role="region" aria-label="Legal quotes carousel" aria-live="polite">
-                {QUOTES.map((q, idx) => (
-                  <div
-                    key={idx}
-                    className={`quote-slide ${activeQuote === idx ? 'active' : ''}`}
-                    style={{ display: activeQuote === idx ? 'block' : 'none' }}
-                    role="blockquote"
-                  >
-                    <span className="quote-mark" aria-hidden="true">"</span>
-                    <p className="quote-text">{q.text}</p>
-                    <cite className="quote-author">— {q.author}</cite>
-                  </div>
-                ))}
-
-                <div className="quote-controls" role="group" aria-label="Quote navigation">
-                  <button className="quote-btn" onClick={handlePrevQuote} aria-label="Previous quote" id="prev-quote-btn">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
-                  </button>
-                  <div className="quote-dots">
-                    {QUOTES.map((_, idx) => (
-                      <button
-                        key={idx}
-                        className={`dot ${activeQuote === idx ? 'active' : ''}`}
-                        onClick={() => { stopQuoteInterval(); setActiveQuote(idx); }}
-                        aria-label={`Quote ${idx + 1}`}
-                        aria-current={activeQuote === idx ? 'true' : 'false'}
-                        id={`quote-dot-${idx}`}
-                      />
-                    ))}
-                  </div>
-                  <button className="quote-btn" onClick={handleNextQuote} aria-label="Next quote" id="next-quote-btn">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* ═══ POSTS / UPDATES SECTION ═══ */}
-          <section className="posts-section" id="posts" aria-label="Insights and Updates" style={{ backgroundColor: 'var(--bg-secondary)', padding: '5rem 0' }}>
-            <div className="container">
-              <div className="section-header text-center">
-                <span className="section-subtitle" style={{ color: 'var(--accent-color)', fontSize: '0.9rem', fontWeight: '600', letterSpacing: '2px', textTransform: 'uppercase' }}>Insights & Updates</span>
-                <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', margin: '1rem 0' }}><span className="serif-title">Firm</span> Perspectives</h2>
-              </div>
-              {posts.length === 0 ? (
-                <p className="text-center text-muted" style={{ padding: '2rem 0' }}>Stay tuned for updates.</p>
-              ) : (
-                <div className="marquee-container" style={{ marginTop: '3rem' }}>
-                  {[...posts, ...posts].map((post, idx) => (
-                    <div key={`${post._id}-${idx}`} className="post-card review-card" style={{ background: 'var(--bg-color)', border: '1px solid var(--border-color)', borderRadius: '12px', overflow: 'hidden', minWidth: '320px', transition: 'transform 0.3s ease, box-shadow 0.3s ease', display: 'flex', flexDirection: 'column' }}>
-                      {post.image && (
-                        <div className="post-image-wrapper" style={{ width: '100%', height: 'auto', maxHeight: '300px', display: 'flex', justifyContent: 'center', backgroundColor: 'var(--bg-secondary)' }}>
-                          <img src={post.image} alt={post.title} style={{ width: '100%', height: 'auto', maxHeight: '300px', objectFit: 'contain' }} />
-                        </div>
-                      )}
-                      <div className="post-content" style={{ padding: '1.5rem', flexGrow: 1 }}>
-                        <span className="post-date" style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.5rem' }}>
-                          {new Date(post.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
-                        </span>
-                        <h3 className="post-title" style={{ fontSize: '1.25rem', marginBottom: '1rem', lineHeight: '1.4' }}>{post.title}</h3>
-                        <p className="post-excerpt" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: '1.6', whiteSpace: 'pre-wrap' }}>{post.content}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
           </section>
 
@@ -917,7 +839,7 @@ export default function App() {
             </div>
           )}
 
-          {/* ═══ CONTACT SECTION ═══ */}
+          {/* ═══ REVIEWS SECTION ═══ */}
           <section className="reviews-section" id="reviews" aria-label="Client Testimonials and Google Reviews">
             <div className="container">
               <div className="section-header">
@@ -952,6 +874,235 @@ export default function App() {
             </div>
           </section>
 
+          {/* ═══ QUOTES SECTION ═══ */}
+          <section className="quotes-section" id="quotes" aria-label="Legal philosophy quotes">
+            <div className="container">
+              <div className="section-header">
+                <span className="section-tag">Philosophy</span>
+                <h2 className="section-title">Guided by Truth</h2>
+              </div>
+
+              <div className="quote-slider-container" role="region" aria-label="Legal quotes carousel" aria-live="polite">
+                {QUOTES.map((q, idx) => (
+                  <div
+                    key={idx}
+                    className={`quote-slide ${activeQuote === idx ? 'active' : ''}`}
+                    style={{ display: activeQuote === idx ? 'block' : 'none' }}
+                    role="blockquote"
+                  >
+                    <span className="quote-mark" aria-hidden="true">"</span>
+                    <p className="quote-text">{q.text}</p>
+                    <cite className="quote-author">— {q.author}</cite>
+                  </div>
+                ))}
+
+                <div className="quote-controls" role="group" aria-label="Quote navigation">
+                  <button className="quote-btn" onClick={handlePrevQuote} aria-label="Previous quote" id="prev-quote-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
+                  </button>
+                  <div className="quote-dots">
+                    {QUOTES.map((_, idx) => (
+                      <button
+                        key={idx}
+                        className={`dot ${activeQuote === idx ? 'active' : ''}`}
+                        onClick={() => { stopQuoteInterval(); setActiveQuote(idx); }}
+                        aria-label={`Quote ${idx + 1}`}
+                        aria-current={activeQuote === idx ? 'true' : 'false'}
+                        id={`quote-dot-${idx}`}
+                      />
+                    ))}
+                  </div>
+                  <button className="quote-btn" onClick={handleNextQuote} aria-label="Next quote" id="next-quote-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* ═══ POSTS / UPDATES SECTION ═══ */}
+          <section className="posts-section" id="posts" aria-label="Insights and Updates" style={{ backgroundColor: 'var(--bg-secondary)', padding: '5rem 0' }}>
+            <div className="container">
+              <div className="section-header text-center">
+                <span className="section-subtitle" style={{ color: 'var(--accent-color)', fontSize: '0.9rem', fontWeight: '600', letterSpacing: '2px', textTransform: 'uppercase' }}>Insights & Updates</span>
+                <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', margin: '1rem 0' }}><span className="serif-title">Firm</span> Perspectives</h2>
+              </div>
+              {posts.length === 0 ? (
+                <p className="text-center text-muted" style={{ padding: '2rem 0' }}>Stay tuned for updates.</p>
+              ) : (
+                <div className="marquee-container" style={{ marginTop: '3rem' }}>
+                  {[...posts, ...posts].map((post, idx) => (
+                    <div key={`${post._id}-${idx}`} className="post-card review-card" style={{ background: 'var(--bg-color)', border: '1px solid var(--border-color)', borderRadius: '12px', overflow: 'hidden', minWidth: '320px', transition: 'transform 0.3s ease, box-shadow 0.3s ease', display: 'flex', flexDirection: 'column' }}>
+                      {post.image && (
+                        <div className="post-image-wrapper" style={{ width: '100%', height: 'auto', maxHeight: '300px', display: 'flex', justifyContent: 'center', backgroundColor: 'var(--bg-secondary)' }}>
+                          <img src={post.image} alt={post.title} style={{ width: '100%', height: 'auto', maxHeight: '300px', objectFit: 'contain' }} />
+                        </div>
+                      )}
+                      <div className="post-content" style={{ padding: '1.5rem', flexGrow: 1 }}>
+                        <span className="post-date" style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.5rem' }}>
+                          {new Date(post.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
+                        </span>
+                        <h3 className="post-title" style={{ fontSize: '1.25rem', marginBottom: '1rem', lineHeight: '1.4' }}>{post.title}</h3>
+                        <p className="post-excerpt" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: '1.6', whiteSpace: 'pre-wrap' }}>{post.content}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </section>
+
+          {/* ═══ CAREERS / FIRST GEN LAWYERS SECTION ═══ */}
+          <section className="first-gen-section" id="careers" aria-label="First Generation Lawyers Connect">
+            <div className="container">
+              <div className="first-gen-grid">
+                <div className="first-gen-info">
+                  <span className="section-subtitle">Join The Team</span>
+                  <h2><span className="serif-title">First-Gen</span><br />Lawyers Connect</h2>
+                  <p className="first-gen-desc">
+                    Are you a first-generation lawyer looking for mentorship, guidance, or an opportunity to work with us? We believe in nurturing raw talent and providing a platform for the next generation of legal minds.
+                  </p>
+                  <div className="first-gen-perks">
+                    <div className="perk-item">
+                      <div className="perk-icon">🎓</div>
+                      <div className="perk-text">
+                        <h4>Mentorship</h4>
+                        <p>Learn directly from seasoned trial advocates.</p>
+                      </div>
+                    </div>
+                    <div className="perk-item">
+                      <div className="perk-icon">💼</div>
+                      <div className="perk-text">
+                        <h4>High-Stakes Exposure</h4>
+                        <p>Work on complex constitutional and corporate matters.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="first-gen-form-container">
+                  {!isCareerSuccess ? (
+                    <div className="form-card">
+                      <h3>Start Your Journey</h3>
+                      <form onSubmit={handleCareerSubmit} noValidate className="modern-form">
+                        <div className="form-group floating">
+                          <input
+                            type="text"
+                            id="career-name"
+                            name="name"
+                            value={careerFormState.name}
+                            onChange={handleCareerInputChange}
+                            className={careerFormErrors.name ? 'error' : ''}
+                            placeholder=" "
+                            aria-required="true"
+                          />
+                          <label htmlFor="career-name">Full Name *</label>
+                          {careerFormErrors.name && <span className="error-msg">Name is required</span>}
+                        </div>
+
+                        <div className="form-group floating">
+                          <input
+                            type="email"
+                            id="career-email"
+                            name="email"
+                            value={careerFormState.email}
+                            onChange={handleCareerInputChange}
+                            className={careerFormErrors.email ? 'error' : ''}
+                            placeholder=" "
+                            aria-required="true"
+                          />
+                          <label htmlFor="career-email">Email Address *</label>
+                          {careerFormErrors.email && <span className="error-msg">Valid email is required</span>}
+                        </div>
+
+                        <div className="form-row split">
+                          <div className="form-group floating">
+                            <input
+                              type="tel"
+                              id="career-phone"
+                              name="phone"
+                              value={careerFormState.phone}
+                              onChange={handleCareerInputChange}
+                              placeholder=" "
+                            />
+                            <label htmlFor="career-phone">Phone (Optional)</label>
+                          </div>
+                          <div className="form-group">
+                            <select
+                              id="career-interest"
+                              name="interest"
+                              value={careerFormState.interest}
+                              onChange={handleCareerInputChange}
+                              className={`modern-select ${careerFormErrors.interest ? 'error' : ''}`}
+                              aria-required="true"
+                            >
+                              <option value="" disabled>Select Area of Interest *</option>
+                              <option value="Litigation">Litigation & Trial</option>
+                              <option value="Corporate">Corporate & Financial</option>
+                              <option value="Research">Legal Research & Drafting</option>
+                              <option value="Internship">Internship / Observation</option>
+                            </select>
+                            {careerFormErrors.interest && <span className="error-msg">Please select an area</span>}
+                          </div>
+                        </div>
+
+                        <div className="form-group floating">
+                          <textarea
+                            id="career-message"
+                            name="message"
+                            value={careerFormState.message}
+                            onChange={handleCareerInputChange}
+                            rows="3"
+                            placeholder=" "
+                          ></textarea>
+                          <label htmlFor="career-message">Your Background / Why connect?</label>
+                        </div>
+
+                        {careerServerError && (
+                          <div className="form-server-error" role="alert">
+                            ⚠️ {careerServerError}
+                          </div>
+                        )}
+                        <button
+                          type="submit"
+                          className={`btn btn-primary btn-block ${isCareerSubmitting ? 'submitting' : ''}`}
+                          disabled={isCareerSubmitting}
+                        >
+                          {isCareerSubmitting ? (
+                            <span className="spinner-text">
+                              <span className="btn-spinner" aria-hidden="true"></span>
+                              Submitting...
+                            </span>
+                          ) : (
+                            <span>🎓 Apply to Connect</span>
+                          )}
+                        </button>
+                        <p className="form-note text-center">
+                          Your details will be emailed directly to our team.
+                        </p>
+                      </form>
+                    </div>
+                  ) : (
+                    <div className="form-success-state active">
+                      <div className="success-icon-wrapper">
+                        <svg className="success-checkmark" viewBox="0 0 52 52">
+                          <circle className="success-checkmark-circle" cx="26" cy="26" r="25" fill="none" />
+                          <path className="success-checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                        </svg>
+                      </div>
+                      <h3 className="success-title">Application Sent!</h3>
+                      <p className="success-text">
+                        We've received your request and will review your profile shortly. Keep an eye on your inbox!
+                      </p>
+                      <button className="btn btn-secondary" onClick={resetCareerForm}>Submit Another</button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </section>
+        </>
+{/* ═══ CONTACT SECTION ═══ */}
           <section className="contact-section" id="contact" aria-label="Contact and consultation booking">
             <div className="container">
               <div className="contact-grid">
@@ -1192,157 +1343,7 @@ export default function App() {
             </div>
           </section>
 
-          {/* ═══ CAREERS / FIRST GEN LAWYERS SECTION ═══ */}
-          <section className="first-gen-section" id="careers" aria-label="First Generation Lawyers Connect">
-            <div className="container">
-              <div className="first-gen-grid">
-                <div className="first-gen-info">
-                  <span className="section-subtitle">Join The Team</span>
-                  <h2><span className="serif-title">First-Gen</span><br />Lawyers Connect</h2>
-                  <p className="first-gen-desc">
-                    Are you a first-generation lawyer looking for mentorship, guidance, or an opportunity to work with us? We believe in nurturing raw talent and providing a platform for the next generation of legal minds.
-                  </p>
-                  <div className="first-gen-perks">
-                    <div className="perk-item">
-                      <div className="perk-icon">🎓</div>
-                      <div className="perk-text">
-                        <h4>Mentorship</h4>
-                        <p>Learn directly from seasoned trial advocates.</p>
-                      </div>
-                    </div>
-                    <div className="perk-item">
-                      <div className="perk-icon">💼</div>
-                      <div className="perk-text">
-                        <h4>High-Stakes Exposure</h4>
-                        <p>Work on complex constitutional and corporate matters.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="first-gen-form-container">
-                  {!isCareerSuccess ? (
-                    <div className="form-card">
-                      <h3>Start Your Journey</h3>
-                      <form onSubmit={handleCareerSubmit} noValidate className="modern-form">
-                        <div className="form-group floating">
-                          <input
-                            type="text"
-                            id="career-name"
-                            name="name"
-                            value={careerFormState.name}
-                            onChange={handleCareerInputChange}
-                            className={careerFormErrors.name ? 'error' : ''}
-                            placeholder=" "
-                            aria-required="true"
-                          />
-                          <label htmlFor="career-name">Full Name *</label>
-                          {careerFormErrors.name && <span className="error-msg">Name is required</span>}
-                        </div>
-
-                        <div className="form-group floating">
-                          <input
-                            type="email"
-                            id="career-email"
-                            name="email"
-                            value={careerFormState.email}
-                            onChange={handleCareerInputChange}
-                            className={careerFormErrors.email ? 'error' : ''}
-                            placeholder=" "
-                            aria-required="true"
-                          />
-                          <label htmlFor="career-email">Email Address *</label>
-                          {careerFormErrors.email && <span className="error-msg">Valid email is required</span>}
-                        </div>
-
-                        <div className="form-row split">
-                          <div className="form-group floating">
-                            <input
-                              type="tel"
-                              id="career-phone"
-                              name="phone"
-                              value={careerFormState.phone}
-                              onChange={handleCareerInputChange}
-                              placeholder=" "
-                            />
-                            <label htmlFor="career-phone">Phone (Optional)</label>
-                          </div>
-                          <div className="form-group">
-                            <select
-                              id="career-interest"
-                              name="interest"
-                              value={careerFormState.interest}
-                              onChange={handleCareerInputChange}
-                              className={`modern-select ${careerFormErrors.interest ? 'error' : ''}`}
-                              aria-required="true"
-                            >
-                              <option value="" disabled>Select Area of Interest *</option>
-                              <option value="Litigation">Litigation & Trial</option>
-                              <option value="Corporate">Corporate & Financial</option>
-                              <option value="Research">Legal Research & Drafting</option>
-                              <option value="Internship">Internship / Observation</option>
-                            </select>
-                            {careerFormErrors.interest && <span className="error-msg">Please select an area</span>}
-                          </div>
-                        </div>
-
-                        <div className="form-group floating">
-                          <textarea
-                            id="career-message"
-                            name="message"
-                            value={careerFormState.message}
-                            onChange={handleCareerInputChange}
-                            rows="3"
-                            placeholder=" "
-                          ></textarea>
-                          <label htmlFor="career-message">Your Background / Why connect?</label>
-                        </div>
-
-                        {careerServerError && (
-                          <div className="form-server-error" role="alert">
-                            ⚠️ {careerServerError}
-                          </div>
-                        )}
-                        <button
-                          type="submit"
-                          className={`btn btn-primary btn-block ${isCareerSubmitting ? 'submitting' : ''}`}
-                          disabled={isCareerSubmitting}
-                        >
-                          {isCareerSubmitting ? (
-                            <span className="spinner-text">
-                              <span className="btn-spinner" aria-hidden="true"></span>
-                              Submitting...
-                            </span>
-                          ) : (
-                            <span>🎓 Apply to Connect</span>
-                          )}
-                        </button>
-                        <p className="form-note text-center">
-                          Your details will be emailed directly to our team.
-                        </p>
-                      </form>
-                    </div>
-                  ) : (
-                    <div className="form-success-state active">
-                      <div className="success-icon-wrapper">
-                        <svg className="success-checkmark" viewBox="0 0 52 52">
-                          <circle className="success-checkmark-circle" cx="26" cy="26" r="25" fill="none" />
-                          <path className="success-checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
-                        </svg>
-                      </div>
-                      <h3 className="success-title">Application Sent!</h3>
-                      <p className="success-text">
-                        We've received your request and will review your profile shortly. Keep an eye on your inbox!
-                      </p>
-                      <button className="btn btn-secondary" onClick={resetCareerForm}>Submit Another</button>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </section>
-        </>
-      )}
+                )}
 
       {currentView === 'admin' && (
         <AdminPortal token={adminToken} setToken={setAdminToken} onExit={() => setCurrentView('home')} fetchPublicPosts={fetchPosts} />
