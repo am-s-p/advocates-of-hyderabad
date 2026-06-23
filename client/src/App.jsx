@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 
-const WHATSAPP_NUMBER = '917600079980';
+const WHATSAPP_NUMBER = '919493456771';
 // Uses relative path — works in both local dev (via Vite proxy) and Vercel production
 const SERVER_URL = '';
 
